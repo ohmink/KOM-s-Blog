@@ -1,11 +1,6 @@
 .index-page {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-
-  background-color: antiquewhite;
 }
-
-.index-contents {
-  flex: 0.8;
+.index-page-main {
+  flex: 0.6;
 }
