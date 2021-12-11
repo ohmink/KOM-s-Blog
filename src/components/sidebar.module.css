@@ -1,0 +1,17 @@
+.sidebar {
+  flex: 0.2;
+  background-color: aquamarine;
+}
+
+.sidebar-title {
+  font-size: 2rem;
+  font-weight: bolder;
+}
+
+.sidebar-list {
+  list-style: none;
+}
+
+.sidebar-list-item {
+  margin: 0.5rem auto;
+}
