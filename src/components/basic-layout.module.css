@@ -1,0 +1,12 @@
+.basic-layout {
+  width: 100%;
+}
+
+.basic-layout-template {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-main {
+  flex: 0.6;
+}
