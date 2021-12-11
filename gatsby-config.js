@@ -4,22 +4,16 @@ module.exports = {
     title: "KOM's Blog",
   },
   plugins: [
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-mdx",
     {
       resolve: "gatsby-plugin-google-analytics",
       options: {
         trackingId: "whatisthis?",
       },
     },
-    "gatsby-plugin-react-helmet",
-    "gatsby-plugin-mdx",
-    // {
-    //   resolve: "gatsby-source-filesystem",
-    //   options: {
-    //     name: "pages",
-    //     path: "./src/pages/",
-    //   },
-    //   __key: "pages",
-    // },
     {
       resolve: "gatsby-source-filesystem",
       options: {
