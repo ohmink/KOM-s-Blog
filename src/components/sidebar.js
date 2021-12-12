@@ -4,17 +4,33 @@ import {
   sidebarTitle,
   sidebarList,
   sidebarListItem,
+  sidebarListItemLink,
 } from "./sidebar.module.css";
+import { Link } from "gatsby";
 
-const SideBar = () => {
+const SideBar = ({ tags }) => {
+  const VIEWALL = "view-all";
   return (
     <nav className={sidebar}>
-      <span>
-        <p className={sidebarTitle}>DOCUMENTATION</p>
-      </span>
+      <Link to="/" state={{ tagName: VIEWALL }} className={sidebarTitle}>
+        DOCUMENTATION ({tags.totalCount})
+      </Link>
       <ul className={sidebarList}>
-        <li className={sidebarListItem}>test1</li>
-        <li>test2</li>
+        {tags.group.map((tag) => (
+          <li
+            key={tag.fieldValue}
+            id={tag.fieldValue}
+            className={sidebarListItem}
+          >
+            <Link
+              to="/"
+              state={{ tagName: tag.fieldValue }}
+              className={sidebarListItemLink}
+            >
+              {tag.fieldValue} ({tag.totalCount})
+            </Link>
+          </li>
+        ))}
       </ul>
     </nav>
   );
