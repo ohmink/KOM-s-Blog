@@ -1,4 +1,35 @@
 .markdown-nav {
-  flex: 0.2;
-  background-color: darkcyan;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  background-color: white;
+}
+
+.markdown-nav ul {
+  height: fit-content;
+  width: 70%;
+
+  margin-top: 3rem;
+  padding: 0 2rem;
+
+  overflow-y: scroll;
+}
+
+.markdown-nav li {
+  list-style: none;
+}
+
+.markdown-nav-h1 {
+}
+
+.markdown-nav-h2 {
+  margin-left: 1rem;
+}
+
+.markdown-nav-h3 {
+  margin-left: 2rem;
+}
+
+.markdown-nav-h4 {
+  margin-left: 3rem;
 }
