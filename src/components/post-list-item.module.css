@@ -1,4 +1,38 @@
 .post-list-item {
+  list-style: none;
+  border-bottom: 1px solid lightgray;
+}
+
+.post-list-link {
   color: black;
   text-decoration: none;
+}
+
+.post-list-item-title {
+  margin-bottom: 0.5rem;
+  color: #45858c;
+}
+.post-list-item-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.post-list-item-info span {
+  display: flex;
+  flex-direction: row;
+}
+
+.post-list-item-info span p {
+  margin-right: 1rem;
+  color: #bf9765;
+}
+
+.post-list-item-date {
+  color: var(--theme-ui-colors-text-secondary, #80797f);
+}
+
+.post-list-item-summary {
+  margin-top: 0;
+  font-size: larger;
 }

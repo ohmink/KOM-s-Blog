@@ -9,7 +9,7 @@ import Header from "./header";
 import SideBar from "../components/sidebar";
 import MarkdownNav from "../components/markdown-nav";
 
-const BasicLayout = ({ children }) => {
+const BasicLayout = ({ children, title, content }) => {
   const tags = useStaticQuery(graphql`
     query SeletByTag {
       allMdx {
@@ -28,7 +28,7 @@ const BasicLayout = ({ children }) => {
       <div className={basicLayoutTemplate}>
         <SideBar tags={tags} />
         <main className={postMain}>{children}</main>
-        <MarkdownNav />
+        <MarkdownNav title={title} content={content} />
       </div>
     </div>
   );

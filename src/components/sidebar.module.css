@@ -1,28 +1,40 @@
 .sidebar {
-  flex: 0.2;
-  background-color: aquamarine;
-
   display: flex;
   flex-direction: column;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  background-color: white;
 }
 
 .sidebar-title {
-  margin: 50px auto 0 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-  color: black;
+  margin: 3rem auto 0 0;
+  padding: 0.5rem 2rem 0.5rem 1.5rem;
+  padding-bottom: 0;
   text-decoration: none;
-  font-size: 1rem;
+}
+
+.sidebar-title p {
+  margin: 0 0 0 1rem;
+  color: black;
+  font-size: 0.85rem;
   font-weight: bolder;
 }
 
 .sidebar-list {
   list-style: none;
-  margin-top: 0;
+  margin-top: 1rem;
+  margin-left: 2rem;
   padding: 0;
 }
 
 .sidebar-list-item {
-  margin: 0.5rem 0 0.5rem 50px;
+  padding: 0.3rem 2rem;
+  border-left: 2px solid var(--theme-ui-colors-grey-30, #d9d7e0);
   text-decoration: none;
   color: black;
 }

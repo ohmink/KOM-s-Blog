@@ -1,14 +1,30 @@
 import { Link } from "gatsby";
 import * as React from "react";
-import { postListItem } from "./post-list-item.module.css";
+import {
+  postListItem,
+  postListLink,
+  postListItemTitle,
+  postListItemInfo,
+  postListItemDate,
+  postListItemSummary,
+} from "./post-list-item.module.css";
 
-const PostListItem = ({ title, date, summary, url }) => {
+const PostListItem = ({ title, tag, date, summary, url }) => {
   return (
-    <Link to={url} className={postListItem}>
-      <h2>{title}</h2>
-      <p>{date}</p>
-      <h4>{summary}</h4>
-    </Link>
+    <li className={postListItem}>
+      <Link to={url} className={postListLink}>
+        <h2 className={postListItemTitle}>{title}</h2>
+        <div className={postListItemInfo}>
+          <span>
+            {tag.map((name) => (
+              <p key={`${title}-tag:${name}`}>{`#${name}`}</p>
+            ))}
+          </span>
+          <p className={postListItemDate}>{date}</p>
+        </div>
+        <p className={postListItemSummary}>{summary}</p>
+      </Link>
+    </li>
   );
 };
 

@@ -7,20 +7,27 @@ import {
   sidebarListItemLink,
 } from "./sidebar.module.css";
 import { Link } from "gatsby";
+import { StaticImage } from "gatsby-plugin-image";
 
 const SideBar = ({ tags }) => {
   const VIEWALL = "view-all";
   return (
     <nav className={sidebar}>
       <Link to="/" state={{ tagName: VIEWALL }} className={sidebarTitle}>
-        DOCUMENTATION ({tags.totalCount})
+        <StaticImage
+          placeholder="tracedSVG"
+          alt="Documentation"
+          src="../images/documentation_icon.png"
+          height={20}
+        />
+        <p>DOCUMENTATION ({tags.totalCount})</p>
       </Link>
       <ul className={sidebarList}>
         {tags.group.map((tag) => (
           <li
             key={tag.fieldValue}
             id={tag.fieldValue}
-            className={sidebarListItem}
+            className={`${sidebarListItem} sidebar-tag-li`}
           >
             <Link
               to="/"
