@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { postTitle, postDate } from "./{mdx.slog}.module.css";
 import BasicLayout from "../../components/basic-layout";
 
 const BlogPost = ({ data }) => {
