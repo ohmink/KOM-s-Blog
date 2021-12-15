@@ -8,6 +8,7 @@ import {
   postInfoTags,
   postInfoDate,
 } from "./{mdx.slog}.module.css";
+import SEO from "../../components/seo";
 import BasicLayout from "../../components/basic-layout";
 
 const BlogPost = ({ data }) => {
@@ -16,6 +17,10 @@ const BlogPost = ({ data }) => {
       title={data.mdx.frontmatter.title}
       content={data.mdx.internal.content}
     >
+      <SEO
+        title={data.mdx.frontmatter.title}
+        description={data.mdx.frontmatter.description || "nothin’"}
+      />
       <div className={post}>
         <h1 className={postTitle}>{data.mdx.frontmatter.title}</h1>
         <div className={postInfo}>
@@ -37,6 +42,7 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       body
       frontmatter {
+        description
         title
         date(formatString: "YYYY년 MM월 DD일")
         tag
