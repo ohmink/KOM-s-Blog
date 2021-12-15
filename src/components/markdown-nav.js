@@ -48,21 +48,16 @@ const MarkdownNav = ({ title, content }) => {
   return (
     <nav className={markdownNav}>
       <ul>
-        <li
-          className={markdownNavH1}
-          onClick={clickHeading}
-          onKeyDown={clickHeading}
-        >
-          {title}
+        <li className={markdownNavH1}>
+          <button onClick={clickHeading} onKeyDown={clickHeading}>
+            {title}
+          </button>
         </li>
         {headingList.map((obj) => (
-          <li
-            className={obj[0]}
-            key={`markdown-nav:${obj[1]}`}
-            onClick={clickHeading}
-            onKeyDown={clickHeading}
-          >
-            {obj[1]}
+          <li className={obj[0]} key={`markdown-nav:${obj[1]}`}>
+            <button onClick={clickHeading} onKeyDown={clickHeading}>
+              {obj[1]}
+            </button>
           </li>
         ))}
       </ul>

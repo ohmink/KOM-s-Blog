@@ -21,7 +21,7 @@ const BlogPost = ({ data }) => {
         <div className={postInfo}>
           <span className={postInfoTags}>
             {data.mdx.frontmatter.tag.map((name) => (
-              <p>#{name}</p>
+              <p key={`post-tag-${name}`}>#{name}</p>
             ))}
           </span>
           <p className={postInfoDate}>{data.mdx.frontmatter.date}</p>
@@ -38,7 +38,7 @@ export const query = graphql`
       body
       frontmatter {
         title
-        date(formatString: "MMMM D, YYYY")
+        date(formatString: "YYYY년 MM월 DD일")
         tag
       }
       internal {

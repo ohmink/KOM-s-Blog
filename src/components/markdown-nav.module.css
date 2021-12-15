@@ -1,4 +1,5 @@
 .markdown-nav {
+  width: 20%;
   height: 100%;
   position: fixed;
   right: 0;
@@ -10,8 +11,9 @@
   width: 70%;
 
   margin-top: 3rem;
-  padding: 0 2rem;
+  padding: 0.5rem 2rem 1rem 1rem;
 
+  border-left: 1px solid #ddd;
   overflow-y: scroll;
 }
 
@@ -19,7 +21,18 @@
   list-style: none;
 }
 
+.markdown-nav li button {
+  border: none;
+  text-align: left;
+  background-color: white;
+}
+
+.markdown-nav li button:hover {
+  cursor: pointer;
+}
+
 .markdown-nav-h1 {
+  margin-left: 0.1rem;
 }
 
 .markdown-nav-h2 {

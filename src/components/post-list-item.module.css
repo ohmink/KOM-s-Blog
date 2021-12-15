@@ -34,5 +34,7 @@
 
 .post-list-item-summary {
   margin-top: 0;
+
   font-size: larger;
+  font-weight: 300;
 }

@@ -8,6 +8,7 @@ import { graphql, useStaticQuery } from "gatsby";
 import Header from "./header";
 import SideBar from "../components/sidebar";
 import MarkdownNav from "../components/markdown-nav";
+import Search from "./search-modal";
 
 const BasicLayout = ({ children, title, content }) => {
   const tags = useStaticQuery(graphql`
@@ -24,6 +25,7 @@ const BasicLayout = ({ children, title, content }) => {
 
   return (
     <div className={basicLayout}>
+      <Search />
       <Header />
       <div className={basicLayoutTemplate}>
         <SideBar tags={tags} />

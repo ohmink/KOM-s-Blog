@@ -8,6 +8,16 @@ import {
 import { StaticImage } from "gatsby-plugin-image";
 
 const Header = () => {
+  function openSearch() {
+    const $searchLayout = document.getElementById("search-layout");
+    if ($searchLayout) {
+      $searchLayout.style.display = "flex";
+
+      const $searchInput = document.getElementById("search-input");
+      $searchInput.focus();
+    }
+  }
+
   return (
     <header className={header}>
       <a
@@ -18,7 +28,11 @@ const Header = () => {
         KOM's Blog
       </a>
       <div className={headerContents}>
-        <button type="button" className={headerContentsSearch}>
+        <button
+          type="button"
+          onClick={openSearch}
+          className={headerContentsSearch}
+        >
           <StaticImage
             placeholder="tracedSVG"
             alt="Search"

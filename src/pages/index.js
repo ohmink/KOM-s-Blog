@@ -15,16 +15,17 @@ const BlogPage = ({ location, data }) => {
 
     if (state && tagName) {
       const tagBtns = document.querySelectorAll(".sidebar-tag-li");
-      tagBtns.forEach(
-        (tagBtn) =>
-          (tagBtn.style.borderLeftColor =
-            "var(--theme-ui-colors-grey-30, #d9d7e0)")
-      );
+      tagBtns.forEach((tagBtn) => {
+        tagBtn.style.borderLeftColor =
+          "var(--theme-ui-colors-grey-30, #d9d7e0)";
+        tagBtn.firstChild.style.color = "black";
+      });
 
       if (tagName === VIEWALL) setPostList(originData);
       else {
         const selectedTag = document.getElementById(tagName);
         selectedTag.style.borderLeftColor = "#45858C";
+        selectedTag.firstChild.style.color = "#45858C";
 
         setPostList(
           originData.filter((post) => post.frontmatter.tag.includes(tagName))
@@ -63,7 +64,7 @@ export const query = graphql`
     allMdx(sort: { fields: frontmatter___date, order: DESC }) {
       nodes {
         frontmatter {
-          date(formatString: "MMMM D, YYYY")
+          date(formatString: "YYYY년 MM월 DD일")
           tag
           title
           summary
