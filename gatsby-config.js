@@ -31,6 +31,9 @@ module.exports = {
         typekit: {
           id: process.env.TYPEKIT_ID,
         },
+        google: {
+          families: ["Merriweather", "Noto Sans Korean"],
+        },
       },
     },
   ],
