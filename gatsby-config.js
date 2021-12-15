@@ -4,14 +4,26 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
+    siteUrl: "https://ohmink.github.io/",
     title: "KOM's Blog",
+    author: "OhMin Kwon",
+    description:
+      "웹 개발 지식을 정리하는 소박한 공간, 권오민 블로그, 프론트엔드 개발",
   },
   plugins: [
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-plugin-react-helmet",
     "gatsby-plugin-mdx",
+    "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-robots-txt",
+      options: {
+        host: "https://ohmink.github.io",
+        sitemap: "https://ohmink.github.io/sitemap.xml",
+        policy: [{ userAgent: "*", allow: "/" }],
+      },
+    },
     {
       resolve: "gatsby-plugin-google-analytics",
       options: {

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { indexMainPosition, indexMainList } from "./index.module.css";
+import SEO from "../components/seo";
 import BasicLayout from "../components/basic-layout";
 import PostListItem from "../components/post-list-item";
 
@@ -42,6 +43,7 @@ const BlogPage = ({ location, data }) => {
 
   return (
     <BasicLayout>
+      <SEO />
       <p className={indexMainPosition}>{position}</p>
       <ul className={indexMainList}>
         {postList.map((node) => (
