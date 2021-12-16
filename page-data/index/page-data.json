@@ -1,5 +1,5 @@
 {
     "componentChunkName": "component---src-pages-index-js",
     "path": "/",
-    "result": {"data":{"allMdx":{"nodes":[{"frontmatter":{"date":"2021년 07월 24일","tag":["Javascript","test"],"title":"[프로그래머스] 숫자 문자열과 영단어","summary":"네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.\n다음은 숫자의 일부 자릿수를 영단어로 바꾸는 예시입니다."},"id":"a26f759c-440c-510d-a476-c831ba25ae85","slug":"another-post"},{"frontmatter":{"date":"2021년 07월 23일","tag":["네트워크","test"],"title":"My First Post","summary":"This is test"},"id":"436ca540-c054-525a-9375-8a44a09b477f","slug":"my-first-post"}]}},"pageContext":{}},
+    "result": {"data":{"allMdx":{"nodes":[{"frontmatter":{"date":"2021년 12월 16일","tag":["Javascript"],"title":"this 총정리","summary":"Javascript에서 모든 함수 스코프 내에 자동으로 설정되는 특수한 키워드, this에 대해서 정리해보자"},"id":"4edf4e59-1830-5d2e-8cea-e91f1208c627","slug":"this-of-javascript"},{"frontmatter":{"date":"2021년 07월 24일","tag":["Javascript"],"title":"[프로그래머스] 숫자 문자열과 영단어","summary":"네오와 프로도가 숫자놀이를 하고 있습니다. 네오가 프로도에게 숫자를 건넬 때 일부 자릿수를 영단어로 바꾼 카드를 건네주면 프로도는 원래 숫자를 찾는 게임입니다.\n다음은 숫자의 일부 자릿수를 영단어로 바꾸는 예시입니다."},"id":"77a67fd1-bb27-5fda-a4fb-bc9220154d06","slug":"coding-test1"}]}},"pageContext":{}},
     "staticQueryHashes": ["2841612589","3433077949","3494247862"]}

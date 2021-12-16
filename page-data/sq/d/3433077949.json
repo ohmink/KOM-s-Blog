@@ -1,1 +1,1 @@
-{"data":{"allMdx":{"nodes":[{"frontmatter":{"title":"My First Post","tag":["네트워크","test"],"date":"2021-07-23"},"slug":"my-first-post"},{"frontmatter":{"title":"[프로그래머스] 숫자 문자열과 영단어","tag":["Javascript","test"],"date":"2021-07-24"},"slug":"another-post"}]}}}
+{"data":{"allMdx":{"nodes":[{"frontmatter":{"title":"this 총정리","tag":["Javascript"],"date":"2021-12-16"},"slug":"this-of-javascript"},{"frontmatter":{"title":"[프로그래머스] 숫자 문자열과 영단어","tag":["Javascript"],"date":"2021-07-24"},"slug":"coding-test1"}]}}}
