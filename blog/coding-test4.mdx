@@ -1,0 +1,188 @@
+---
+description: "위클리 챌린지, [프로그래머스] 상호 평가"
+title: "[프로그래머스] 상호 평가"
+tag: ["코딩테스트"]
+date: "2021-08-17"
+summary: ""
+---
+
+> 위클리 챌린지 3주차 문제
+
+## 문제 설명
+
+테이블 위에 놓인 퍼즐 조각을 게임 보드의 빈 공간에 적절히 올려놓으려 합니다. 게임 보드와 테이블은 모두 각 칸이 1x1 크기인 정사각 격자 모양입니다. 이때, 다음 규칙에 따라 테이블 위에 놓인 퍼즐 조각을 게임 보드의 빈칸에 채우면 됩니다.
+
+- 조각은 한 번에 하나씩 채워 넣습니다.
+- 조각을 회전시킬 수 있습니다.
+- 조각을 뒤집을 수는 없습니다.
+- 게임 보드에 새로 채워 넣은 퍼즐 조각과 인접한 칸이 비어있으면 안 됩니다.
+
+다음은 퍼즐 조각을 채우는 예시입니다.
+
+![](https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/ab4d8aa2-f282-4764-bb46-84d405464b90/puzzle_5.png)
+
+위 그림에서 왼쪽은 현재 게임 보드의 상태를, 오른쪽은 테이블 위에 놓인 퍼즐 조각들을 나타냅니다. 테이블 위에 놓인 퍼즐 조각들 또한 마찬가지로 [상,하,좌,우]로 인접해 붙어있는 경우는 없으며, 흰 칸은 퍼즐이 놓이지 않은 빈 공간을 나타냅니다. 모든 퍼즐 조각은 격자 칸에 딱 맞게 놓여있으며, 격자 칸을 벗어나거나, 걸쳐 있는 등 잘못 놓인 경우는 없습니다.
+
+이때, 아래 그림과 같이 3,4,5번 조각을 격자 칸에 놓으면 규칙에 어긋나므로 불가능한 경우입니다.
+
+![](https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/70e371ad-4306-412b-b53b-25208e52a513/puzzle_6.png)
+
+- 3번 조각을 놓고 4번 조각을 놓기 전에 위쪽으로 인접한 칸에 빈칸이 생깁니다.
+- 5번 조각의 양 옆으로 인접한 칸에 빈칸이 생깁니다.
+
+다음은 규칙에 맞게 최대한 많은 조각을 게임 보드에 채워 넣은 모습입니다.
+
+![](https://grepp-programmers.s3.ap-northeast-2.amazonaws.com/files/production/dadd0bc1-8e38-4689-a480-26afa799a5a3/puzzle_7.png)
+
+최대한 많은 조각을 채워 넣으면 총 14칸을 채울 수 있습니다.
+
+현재 게임 보드의 상태 **game_board**, 테이블 위에 놓인 퍼즐 조각의 상태 **table**이 매개변수로 주어집니다. 규칙에 맞게 최대한 많은 퍼즐 조각을 채워 넣을 경우, 총 몇 칸을 채울 수 있는지 return 하도록 solution 함수를 완성해주세요.
+
+## 제한사항
+
+- 3 ≤ game_board의 행 길이 ≤ 50
+- game_board의 각 열 길이 = game_board의 행 길이
+  - 즉, 게임 보드는 정사각 격자 모양입니다.
+  - game_board의 모든 원소는 0 또는 1입니다.
+  - 0은 빈칸, 1은 이미 채워진 칸을 나타냅니다.
+  - 퍼즐 조각이 놓일 빈칸은 1 x 1 크기 정사각형이 최소 1개에서 최대 6개까지 연결된 형태로만 주어집니다.
+- table의 행 길이 = game_board의 행 길이
+- table의 각 열 길이 = table의 행 길이
+  - 즉, 테이블은 game_board와 같은 크기의 정사각 격자 모양입니다.
+  - table의 모든 원소는 0 또는 1입니다.
+  - 0은 빈칸, 1은 조각이 놓인 칸을 나타냅니다.
+  - 퍼즐 조각은 1 x 1 크기 정사각형이 최소 1개에서 최대 6개까지 연결된 형태로만 주어집니다.
+- game_board에는 반드시 하나 이상의 빈칸이 있습니다.
+- table에는 반드시 하나 이상의 블록이 놓여 있습니다.
+
+## 입출력 예
+
+| game_board                                                                            | table                                                                                 | result |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------ |
+| [[1,1,0,0,1,0],[0,0,1,0,1,0],[0,1,1,0,0,1],[1,1,0,1,1,1],[1,0,0,0,1,0],[0,1,1,1,0,0]] | [[1,0,0,1,1,0],[1,0,1,0,1,0],[0,1,1,0,1,1],[0,0,1,0,0,0],[1,1,0,1,1,0],[0,1,0,0,0,0]] | 14     |
+| [[0,0,0],[1,1,0],[1,1,1]]                                                             | [[1,1,1],[1,0,0],[0,0,0]]                                                             | 0      |
+
+## 풀이
+
+> 간단하게 게임 보드와 테이블에서 퍼즐 조각에 대한 데이터를 얻고, 퍼즐을 회전시키면서 게임 보드에 맞춰보면서 하나씩 소거하는 방식으로 진행하면 된다.
+
+> Step 1. 게임 보드와 테이블에서 퍼즐 조각에 대한 정보를 얻는다. (2차원 배열, 퍼즐 조각의 네모 하나마다 좌표로 표현하고 비교하기 쉽게 시작점으로부터의 거리로 변환한다.)
+
+> Step 2. 제일 큰 퍼즐 조각부터 게임 보드에 맞춰본다. 빈칸이 존재하면 안 되니 정확히 일치해야 한다.
+
+> Step 3. 맞는 퍼즐은 테이블에서 지우고, 해당 퍼즐에 맞는 게임 보드의 빈칸도 지운다.
+
+> Step 4. 테이블 자체를 90도 회전시키고 Step 1~4를 반복한다. (퍼즐 조각 각각을 회전시키는 것보다 테이블을 회전시키는 게 간단할 것 같아서)
+
+```
+function getPuzzles(origin, number) {
+    // solution의 원본이 수정되는 것을 막기 위해 table을 복사한다.
+    const table = [];
+    for (let i = 0; i < origin.length; i++) {
+        const item = [];
+        for (let j = 0; j < origin[i].length; j++) {
+            item.push(origin[i][j]);
+        }
+
+        table.push(item);
+    }
+
+    const num = number === 0 ? 1 : 0;
+    let arr = [];
+    // DFS 방식으로 퍼즐 조각을 좌표 형태로 구한다.
+    const setPuzzle = (x, y) => {
+        if (table[x][y] === number) {
+            table[x][y] = num; // 현재 지점을 없애고
+            arr.push([x, y]); // 현재 좌표를 퍼즐 배열에 넣는다.
+
+            if (y + 1 < table.length) setPuzzle(x, y + 1); // 동
+            if (y - 1 >= 0) setPuzzle(x, y - 1); // 서
+            if (x + 1 < table.length) setPuzzle(x + 1, y); // 남
+            if (x - 1 >= 0) setPuzzle(x - 1, y); // 북
+        }
+    }
+
+    const result = [];
+
+    // 테이블을 순회하며 퍼즐 조각을 찾는다.
+    for (let i = 0; i < table.length; i++) {
+        for (let j = 0; j < table[i].length; j++) {
+            if (table[i][j] === number) {
+                setPuzzle(i, j);
+                result.push(arr);
+                arr = [];
+            }
+        }
+    }
+
+    // 게임 보드와 퍼즐 조각을 비교하기 쉽게 좌표가 아닌 시작점과의 거리로 나타냄
+    // 게임 보드에 퍼즐 조각을 맞출 때 편하도록 퍼즐 크기를 내림차순으로 정렬
+    return result.map(data => data.map((p, idx) => {
+            return idx === 0 ? p : [data[0][0] - p[0], data[0][1] - p[1]];
+        })).sort((a, b) => b.length - a.length);
+}
+
+// 테이블 자체를 회전시켜 전체 퍼즐 조각을 회전시키는 효과
+function getRotatedTable(table) {
+    const arr = new Array(table[0].length).fill(0).map(_ => []);
+
+    for (let i = table.length - 1; i >= 0; i--) {
+        for (let j = 0; j < table[0].length; j++) {
+            arr[j].push(table[i][j]);
+        }
+    }
+
+    return arr;
+}
+
+// 게임 보드에 퍼즐 조각이 맞는가?
+function isMatch(spot, puzzle) {
+    for (let i = 1; i < spot.length; i++) {
+        if (spot[i][0] !== puzzle[i][0] || spot[i][1] !== puzzle[i][1])
+            return false;
+    }
+
+    return true;
+}
+
+function solution(gameBoard, table) {
+    // isMatch에서 일치할 경우 해당 퍼즐 조각을 테이블에서 지운다.
+    const removePuzzle = (puzzle) => {
+        const originPuzzle = puzzle.map((data, idx) => {
+            return idx === 0 ? data : [puzzle[0][0] - data[0], puzzle[0][1] - data[1]];
+        });
+
+        originPuzzle.forEach(data => {
+            table[data[0]][data[1]] = 0;
+        })
+    }
+
+    let answer = 0;
+
+    // 게임 보드에서 퍼즐을 넣을 수 있는 모양들 파악
+    const slots = getPuzzles(gameBoard, 0);
+
+    // 3번 회전시켜서 보드에 퍼즐을 맞출 수 있는지 파악
+    for (let i = 0; i <= 3; i++) {
+        if (i !== 0) table = getRotatedTable(table); // 테이블 회전
+        const puzzles = getPuzzles(table, 1);
+
+        // slots vs. puzzles를 비교하고
+        puzzles.forEach(puzzle => {
+            for (let j = 0; j < slots.length; j++) {
+                if (slots[j].length < puzzle.length) break;
+
+                // 퍼즐이 slots에 맞춰진다면 보드와 테이블에서 지우고 answer을 증가시킬 것
+                if (slots[j].length === puzzle.length && isMatch(slots[j], puzzle)) {
+                    answer += puzzle.length;
+                    removePuzzle(puzzle);
+                    slots.splice(j, 1);
+                    break;
+                }
+            }
+        })
+    }
+
+    return answer;
+}
+```
