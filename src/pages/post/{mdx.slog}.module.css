@@ -23,5 +23,9 @@
   margin-right: 1rem;
 }
 
-.post-info-date {
+blockquote {
+  margin: 0.5rem 0;
+  padding: 0.5rem 2rem;
+  background-color: #f8f8f8;
+  border-left: 5px solid darkcyan;
 }
