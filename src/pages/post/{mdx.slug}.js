@@ -6,7 +6,6 @@ import {
   postTitle,
   postInfo,
   postInfoTags,
-  postInfoDate,
 } from "./{mdx.slog}.module.css";
 import SEO from "../../components/seo";
 import BasicLayout from "../../components/basic-layout";
@@ -29,7 +28,7 @@ const BlogPost = ({ data }) => {
               <p key={`post-tag-${name}`}>#{name}</p>
             ))}
           </span>
-          <p className={postInfoDate}>{data.mdx.frontmatter.date}</p>
+          <p>{data.mdx.frontmatter.date}</p>
         </div>
         <MDXRenderer>{data.mdx.body}</MDXRenderer>
       </div>

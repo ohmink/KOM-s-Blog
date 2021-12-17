@@ -63,6 +63,8 @@
 
 .search-result {
   padding: 0;
+  margin-bottom: 2.5rem;
+  overflow-y: auto;
 }
 
 .search-result-item {
