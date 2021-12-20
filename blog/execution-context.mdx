@@ -1,0 +1,106 @@
+---
+description: "JavaScript의 실행 컨텍스트(Execution Context)"
+title: "실행 컨텍스트(Execution Context)"
+tag: ["Javascript"]
+date: "2021-12-20"
+summary: "JavaScript의 핵심원리 실행 컨텍스트가 무엇인지 알아보고 가볍게 이해해보자."
+---
+
+## 실행 컨텍스트가 뭐지?
+
+- 실행 가능한 코드를 형상화하고 구분한 추상적인 개념
+- VO(Variable Object), SC(Scope Chain), thisValue를 담고 있는 객체
+- JavaScript의 동작원리를 담고 있는 핵심원리
+
+## 실행 컨텍스트의 구조
+
+### 1. VO(Variable Object)
+
+변수 객체는 다음과 같은 정보를 담는 객체다.
+
+- 변수
+- 매개변수(parameter)와 인수 정보(arguments)
+- 함수
+
+VO는 실행 컨텍스트의 프로퍼티로서 값을 갖고, 이 값은 다른 객체를 가리킨다.
+
+```
+function test() {
+    let b = 0;
+    let c = "C";
+
+    function testIn() {
+        // ...code
+    }
+}
+
+let a = "Global"
+test();
+```
+
+이와 같은 경우 전역 컨텍스트의 변수 객체는 다음과 같다.
+
+| a        | test            |
+| -------- | --------------- |
+| "Global" | Function Object |
+
+test를 실행하는 순간 함수 컨텍스트(현재는 함수 test에 대한)가 생성되고 그 내용은 다음과 같다.
+
+| arguments | b   | c   | testIn          |
+| --------- | --- | --- | --------------- |
+| {}        | 0   | "C" | Function Object |
+
+결론
+
+- 전역 컨텍스트는 인수 정보가 주어지지 않는다. (전역이니까)
+- 함수 컨텍스트는 매개변수와 인수 정보가 포함된 arguments가 추가된다.
+- 실행 컨텍스트는 실행에 필요한 정보들을 담고 있다.
+-
+
+### 2. SC(Scope Chain)
+
+스코프 체인은 리스트와 같이 전역 객체와 중첩된 함수의 참조롤 순서대로 저장하고 있다.
+
+- 현재 실행 중인 컨텍스트의 스코프를 선두로 하여 순차적으로 상위 컨텍스트의 스코프를 가리킨다.
+
+```
+function test() {
+    let b = 0;
+    let c = "C";
+
+    function testIn() {
+        console.log(a, b, c);
+    }
+
+    testIn();
+}
+
+let a = "Global"
+test();
+```
+
+1. 전역 EC
+2. test의 EC
+3. testIn의 EC
+
+이 코드에서는 다음과 같이 EC가 순서대로 생성되고 testIn에서 a, b, c를 콘솔 메시지로 출력하려고 한다.
+
+여기서 스코프 체인으로 a, b, c를 검색한다.
+
+- 1. testIn에서 a, b, c를 찾는다.
+- 2. testIn에 셋 다 없기 때문에 상위 EC(test)에서 a, b, c를 찾는다.
+- 3. a가 없기 때문에 그 다음 상위 EC(전역)에서 a를 찾는다.
+
+a, b, c를 전부 찾았기 때문에 콘솔 메시지가 출력되고 모든 일을 끝낸 함수는 그대로 종료되어 EC가 사라진다.
+그건 testIn뿐만 아니라 test와 전역 역시 마찬가지.
+
+만약 스코프 체인으로 변수를 찾을 수 없다면 오류가 발생할 것이다.
+
+### 3. thisValue
+
+함수 호출 방식에 따라 달라지는 this는 [다른 글](https://ohmink.github.io/post/this-of-javascript)에 정리해두었다.
+
+## 종합
+
+- 간단히 살펴보면 어렵지 않으나 이건 최대한 간결하게 정리한 것이다.
+- 글이 길어질 경우 나 자신이 혼란에 빠질 것 같아 실행 컨텍스트에서 이어지는 다른 개념들은 따로 정리할 것이다.
