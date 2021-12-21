@@ -1,0 +1,255 @@
+---
+description: "Javascript의 클로저(Closure)"
+title: "클로저(Closure) 이해하기"
+tag: ["Javascript"]
+date: "2021-12-21"
+summary: "면접 단골 문제 클로저에 대해 이해해보자."
+---
+
+나는 무언가를 이해할 때 '정의'를 중요시하는 편이다. 말 그대로 정의란 뜻을 정해둔 거니까.
+
+그런데 프로그래밍과 관련된 용어나 개념들은 정의만으로는 와닿지 않거나 "이게 무슨 말이야?"라고 생각되는 것들이 많다.
+
+**클로저** 역시 그렇다.
+
+## 클로저란?
+
+다음은 클로저에 대한 설명이다.
+
+- 클로저는 함수와 함수가 선언된 어휘적 환경의 조합이다.
+
+이것만 보고 머릿속에 든 생각은... ???
+
+물음표만 떠오르고 갑자기 혼란스러울 수도 있다. 하지만 하나씩 천천히 본다면 크게 어렵지 않다.
+먼저 어휘적 환경이란 용어부터 정리하자.
+
+### 어휘적 환경(Lexical Environment)이란?
+
+- 영어로 **Lexical** Environment, 저 렉시컬이란 단어가 참 익숙하다.
+- **렉시컬 스코프**, 함수의 호출 방식이 아닌 함수를 어디에 선언하였는지에 따라 결정된다.
+
+그리고 코드와 함께 보면 이해하기가 더 쉬워진다.
+
+```
+function test() {
+    let str = "abc";
+
+    function inner() {
+        console.log(str);
+    }
+
+    inner();
+}
+
+test();
+```
+
+test를 실행하면 inner까지 실행하는 코드이다.
+
+- inner안에는 str이란 변수가 없음에도 문제 없이 실행된다.
+- inner가 test의 내부함수로서 선언되었기 때문에, 부모 함수의 변수에 접근할 수 있기 때문
+- '**_어휘적으로 스코프를 지정(Lexical scoping)_**'했기 때문에 가능한 일이며 **실행 컨텍스트**로 설명하면 **스코프 체인**으로 str을 검색했기 때문이다.
+
+다시 한번 클로저에 대한 설명을 보면
+
+- 클로저는 함수와 함수가 선언된 어휘적 환경의 조합이다.
+
+inner는 함수이며, 자신이 선언된 렉시컬 환경을 이용하여 str을 출력했다.
+
+**_따라서, inner는 클로저다._**
+
+## 한걸음 더
+
+예제 코드는 평범하다. 너무 평범해서 평소에 사용하던 코드와 다를 바가 없다.
+**그래서 더욱 놀랍다.** 내가 모르는 사이에 클로저는 자연스럽게 발생하고 있었다는 거니까.
+
+**_단지 그것을 제대로 활용하지 않고 있었을 뿐이다._**
+
+클로저에 대해 조금 더 자세히 이해하기 위해서 예제 코드를 몇 개 더 살펴보자.
+
+```
+function makeFunc() {
+    let name = "Mozilla";
+
+    function displayName() {
+        console.log(name);
+    }
+
+    return displayName;
+}
+
+let myFunc = makeFunc();
+//myFunc변수에 displayName을 리턴함
+//유효범위의 어휘적 환경을 유지
+
+myFunc(); // Mozilla
+//리턴된 displayName 함수를 실행(name 변수에 접근)
+```
+
+makeFunc 함수는 지역변수 name을 출력하는 displayName을 반환한다. 변수 myFunc은 선언문에서 displayName 함수를 저장한다.
+
+- displayName은 클로저고, makeFunc은 클로저를 반환하며, myFunc은 클로저를 저장한 것이다.
+
+makeFunc은 분명 myFunc에서 실행된 후 종료된다. makeFunc의 실행 컨텍스트가 사라진다는 뜻이다. 그리고 displayName은 자신의 부모함수인 makeFunc의 name을 출력한다.
+
+- 그렇다면 myFunc을 실행한다면 오류가 발생하지 않을까?
+- makeFunc은 이미 종료되었고, myFunc은 displayName을 뜻하며, displayName는 출력해야할 name을 찾을 수 없는 상태이지 않은가?
+
+그런데 놀랍게도 myFunc을 실행하면 아무런 문제도 없이 makeFunc의 name을 출력한다.
+
+**_변수 name이 있는 어휘적 환경에 대한 참조를 유지하고 있는 것이다._**
+
+이것만 봐도 흥미로운데 더 재미있는 예제들이 있다.
+
+```
+function makeAdder(x) {
+    var y = 1;
+    return function(z) {
+        y = 100;
+        return x + y + z;
+    };
+}
+
+let add5 = makeAdder(5); // x 값이 5로 저장됨
+let add10 = makeAdder(10); // x 값이 10으로 저장됨
+//클로저에 x와 y의 환경이 저장됨
+
+console.log(add5(2));  // 107 (x:5 + y:100 + z:2)
+console.log(add10(2)); // 112 (x:10 + y:100 + z:2)
+//함수 실행 시 클로저에 저장된 x, y값에 접근하여 값을 계산
+```
+
+makeAdder는 함수를 반환하는데, 그 함수(익명 함수)를 받은 add5와 add10은 둘 다 클로저다.
+
+- 그런데 x의 값은 각각 다르다.
+
+함수의 정의를 공유하지만 각각의 환경에서 x가 다르게 저장되었기 때문이다.
+
+그리고 이 더하기 함수들은 초기에 let y = 1; 로 할당된 y값을 100으로 변경하므로 결과는 주석과 같다.
+
+결과적으로 하나의 클로저를 리턴하는 함수를 가지고 두 개의 add를 만들었다.
+**뭔가, 쓸모가 있어 보인다.**
+
+다음은 웹 이벤트 기반의 예제다.
+
+- body 요소와 h1, h2
+
+```
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+```
+
+- body의 요소 글자들의 크기를 바꾸는 코드
+  > https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures#%EC%8B%A4%EC%9A%A9%EC%A0%81%EC%9D%B8_%ED%81%B4%EB%A1%9C%EC%A0%80
+  > 에서 직접 결과를 확인해볼 수 있다.
+
+```
+function makeSizer(size) {
+    return function() {
+        document.body.style.fontSize = size + 'px';
+    };
+}
+
+let size12 = makeSizer(12);
+let size14 = makeSizer(14);
+let size16 = makeSizer(16);
+
+document.getElementById('size-12').onclick = size12;
+document.getElementById('size-14').onclick = size14;
+document.getElementById('size-16').onclick = size16;
+
+// <a href="#" id="size-12">12</a>
+// <a href="#" id="size-14">14</a>
+// <a href="#" id="size-16">16</a>
+```
+
+- 하나의 함수(makeSizer)로 세 개의 이벤트. 멋지다.
+
+## 실수
+
+let 키워드가 등장하기 전에는 루프 안에 클로저를 생성하는 경우가 일반적인 실수였다고 한다.
+
+```
+for (var i = 1; i <= 5; i++) {
+    setTimeout(function timer() {
+        console.log(i);
+    }, 1000);
+}
+```
+
+i가 1부터 5까지 증가하기 때문에 timer로 출력되는 i 역시 1~5까지 출력될 것 같지만.
+
+- 결과는 6이 연속으로 5번 나온다.
+
+이유는?
+
+setTimeout은 비동기 함수로서 반복문이 끝나고 나서 동작한다.
+따라서 timer는 i가 6이 된 후에 그것을 참조하기 때문에 결과가 6으로 출력되는 것이다.
+
+1~5까지 출력하기 위해서는 어떻게 해야 할까?
+
+```
+for (var i = 1; i <= 5; i++) {
+    (function() {
+        var j = i;
+        setTimeout(function timer() {
+            console.log(j);
+        }, 1000);
+    })();
+}
+
+// 1, 2, 3, 4, 5
+```
+
+setTimeout을 익명함수로 가두고 그것을 실행했다.
+익명함수는 루프 한번마다 j를 i로 선언하고, setTimeout의 timer는 클로저로서 상위 함수(익명함수)의 j를 참조할 것이다.
+
+만약 j를 사용하지 않는다면?
+
+```
+for (var i = 1; i <= 5; i++) {
+    (function() {
+        setTimeout(function timer() {
+            console.log(i);
+        }, 1000);
+    })();
+}
+// 6, 6, 6, 6, 6
+```
+
+timer는 여전히 6으로 변해버린 i를 출력해버린다.
+
+이처럼 루프에서 클로저 사용은 원하지 않는 결과나 오류를 발생시킬 수 있는데,
+이 예제를 let 키워드와 함께 사용하면 훨씬 간단하게 i를 출력할 수 있다.
+
+```
+for (let i = 1; i <= 5; i++) {
+    setTimeout(function timer() {
+        console.log(i);
+    }, 1000);
+}
+// 1, 2, 3, 4, 5
+```
+
+for문 루프에서 let i는 반복할 때마다 다시 선언되기 때문에 이게 가능하다.
+
+## 후기
+
+- 솔직히 이 정도의 이해력만으로 클로저를 실제로 활용하는 건 불가능하다고 생각한다.
+- 가볍게 사용할 수는 있겠으나 난발할 경우 예상치 못한 오류가 발생할 듯하다.
+- [객체 생성](https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures#%EC%84%B1%EB%8A%A5_%EA%B4%80%EB%A0%A8_%EA%B3%A0%EB%A0%A4_%EC%82%AC%ED%95%AD)처럼 사용하는 방법은 보다 숙달되지 않으면 힘들 것이다.
+
+## 학습 및 예제 출처
+
+> [MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures)
+> You don't know js - 타입과 문법, 스코프와 클로저 (저자 - 카일 심슨)
