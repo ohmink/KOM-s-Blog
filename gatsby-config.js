@@ -20,7 +20,10 @@ module.exports = {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: "https://ohmink.github.io",
-        sitemap: "https://ohmink.github.io/sitemap.xml",
+        sitemap: [
+          "https://ohmink.github.io/sitemap/sitemap-index.xml",
+          "https://ohmink.github.io/sitemap/sitemap-0.xml",
+        ],
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
