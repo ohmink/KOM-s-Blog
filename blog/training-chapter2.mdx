@@ -1,0 +1,152 @@
+---
+description: "알고리즘 트레이닝 북 - 스티븐 스키에나, 미구엘 레비야 Chapter 2. 자료구조, 문제 9번과 문제 12번 풀이"
+title: "[트레이닝] Chapter 2. 자료구조 - 문제 9, 문제 12"
+tag: ["코딩테스트"]
+date: "2021-12-27"
+summary: "알고리즘 트레이닝 북 (저자 : 스티븐 스키에나, 미구엘 레비야 / 역자 : 서환수)의 Chapter 2. 자료구조-의 문제 2개를 풀어보았다."
+---
+
+> Chapter 2. 자료구조는 배열, 스택, 큐, 우선순위 큐와 같은 것을 다룬다. 그래프나 연결리스트는 나중에 다루는 듯.
+
+## 문제 9. 유쾌한 점퍼 (레벨 1)
+
+### 설명
+
+n개의 정수로 이루어진 수열에 대해 서로 인접한 두 수의 차가 1~n-1까지의 값을 모두 가지면 그 수열을 유쾌한 점퍼라고 부른다. 수열이 주어졌을 때 유쾌한 점퍼인지 판단하는 프로그램을 작성하라.
+
+- 유쾌한 점퍼라면 Jolly를 리턴하고 아니라면 Not Jolly를 리턴한다.
+
+### 예시
+
+| Input        | Output    |
+| ------------ | --------- |
+| 4 1 4 2 3    | Jolly     |
+| 5 1 4 2 -1 6 | Not Jolly |
+
+### 풀이
+
+- 수열이 주어졌을 때, n번째~n+1번째 숫자가 조건을 만족하는지 확인하자.
+
+```
+function solution(seq) {
+    const n = seq.length;
+
+    for (let i = 0; i < seq.length - 1; i++) {
+        const diff = Math.abs(seq[i] - seq[i + 1]);
+
+        if (diff < 1 || diff > n - 1)
+            return "Not jolly";
+    }
+
+    return "Jolly";
+}
+
+console.log(solution([4, 1, 4, 2, 3])); // "Jolly"
+console.log(solution([5, 1, 4, 2, -1, 6])); "Not Jolly"
+```
+
+## 문제 12. 암호 깨기
+
+암호화 방법 중 흔히 쓰이는 방법으로 알파벳 글자를 다른 글자로 치환하는 방법이 있다. 이것을 다시 복구하려면 두 개의 서로 다른 글자가 같은 글자로 치환되지 않아야 한다.
+
+암호화된 텍스트가 한 줄 이상 입력되는데, 각 줄마다 다른 치환 방법이 적용된다고 가정하자. 암호화 이전의 텍스트에 있는 단어는 모두 주어진 사전에 들어있는 단어라고 가정하고, 암호화된 텍스트를 해독하여 원래 텍스트를 알아내자.
+
+- 입력으로 사전의 단어 개수, 단어들, 암호화가 된 문장들이 주어진다.
+- 이것을 해독하여 원래 텍스트를 리턴하고, 가능한 텍스트가 여러 개라면 아무거나 리턴한다.
+- 해독이 불가능하다면 모든 문자를 아스테리스크(\*)로 바꾸어 리턴한다.
+
+### 예시
+
+> 입력과 출력 예가 조금 불친절하다. 사전의 단어 개수가 첫 줄에 주어지고 그 다음부터 그 개수만큼의 단어가 주어지고, 그 다음 줄부터 해독해야 하는 텍스트가 주어진다. 풀이에서는 이걸 내 식대로 바꾸어 입력했다.
+> Input
+
+```
+6
+and
+dick
+jane
+puff
+spot
+yertle
+bjvg xsb hxsn qymm xsb rqat xsb pnetfn
+xxxx yyy zzzz www yyyy aaa bbbb ccc dddddd
+```
+
+Output
+
+```
+dick and jane puff and spot and yertle
+**** *** **** *** **** *** **** *** ******
+```
+
+### 풀이
+
+다음 코드에서는 사전을 배열로 받았기 때문에 따로 배열을 선언하거나 단어를 사전에 넣을 필요가 없다. 해독해야 할 텍스트 역시 배열로 받았다.
+
+- 사전의 단어를 길이 순으로 정렬하고, 텍스트 배열을 순회하며 각 텍스트를 split하고 사전과 비교한다.
+- isMath 함수에서 텍스트의 단어와 사전의 단어를 비교하는데, 두 개의 배열(map1, map2)을 가지고 해독이 가능한지 판단한다.
+- 각 단어를 0번 ~ 단어.length까지 순회하며, map의 key값 한쪽에만 존재한다면 단어를 이루는 알파벳의 개수가 다르다는 뜻이므로 false를 리턴한다.
+
+```
+function solution(dir, strs) {
+    const answer = [];
+    dir.sort((a, b) => a.length - b.length);
+
+    function isMatch(word1, word2) {
+        const map1 = [];
+        const map2 = [];
+
+        for (let i = 0; i < word1.length; i++) {
+            if ((!map1[word1[i]] && map2[word2[i]]) || (map1[word1[i]] && !map2[word2[i]])) {
+                return false;
+            }
+
+            if (!map1[word1[i]]) {
+                map1[word1[i]] = true;
+                map2[word2[i]] = true;
+            }
+        }
+
+        return true;
+    }
+
+    const history = [];
+
+    for (const str of strs) {
+        const sArr = str.split(" ");
+        let result = "";
+        let status = true;
+
+        for (let i = 0; i < sArr.length; i++) {
+            status = true;
+
+            for (let j = 0; j < dir.length; j++) {
+                if (sArr[i].length !== dir[j].length)
+                    continue;
+                else if (history[dir[j]] && history[dir[j]] !== sArr[i])
+                    continue;
+
+                if (isMatch(sArr[i], dir[j])) {
+                    history[dir[j]] = sArr[i];
+                    result += `${dir[j]} `;
+                    status = false;
+
+                    break;
+                }
+            }
+
+            if (status) {
+                answer.push(str.replace(/\w/g, "*"));
+                break;
+            }
+        }
+
+        if (!status)
+            answer.push(result);
+    }
+
+    return answer;
+}
+
+console.log(solution(["and", "dick", "jane", "puff", "spot", "yertle"], ["bjvg xsb hxsn qymm xsb rqat xsb pnetfn", "xxxx yyy zzzz www yyyy aaa bbbb ccc dddddd"]));
+```
