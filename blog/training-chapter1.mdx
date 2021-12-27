@@ -1,0 +1,128 @@
+---
+description: "알고리즘 트레이닝 북 - 스티븐 스키에나, 미구엘 레비야 Chapter 1. 시작하면서, 문제 1번과 문제 2번 풀이"
+title: "[트레이닝] Chapter 1. 시작하면서 - 문제 1, 문제 2"
+tag: ["코딩테스트"]
+date: "2021-12-27"
+summary: "알고리즘 트레이닝 북 (저자 : 스티븐 스키에나, 미구엘 레비야 / 역자 : 서환수)의 Chapter 1. 시작하면서-의 문제 2개를 풀어보았다."
+---
+
+> 알고리즘 트레이닝 북 (저자 : 스티븐 스키에나, 미구엘 레비야 / 역자 : 서환수)
+> Chapter 1. 시작하면서-의 문제 2개를 풀어보았다.
+
+## 문제 1. 3n + 1 문제 (레벨 1)
+
+### 설명
+
+어떤 정수 n이 주어졌을 때, n이 짝수면 2로 나누고 홀수면 3을 곱한 후 1을 더한다. 여기서 1이 나올 때까지 만들어진 수의 개수(1 포함)를 사이클 길이(cycle-length)라고 한다. i와 j가 주어졌을 때 i와 j 사이의 모든 수에 대한 **최대 사이클 길이를 구하라.**
+
+### 예시
+
+| Input    | Output |
+| -------- | ------ |
+| 1 10     | 20     |
+| 100 200  | 125    |
+| 201 210  | 89     |
+| 900 1000 | 174    |
+
+### 풀이
+
+- i부터 j까지 사이클 값을 모두 구한 후 최대 값을 리턴한다.
+
+```
+function solution(i, j) {
+    let answer = 1;
+
+    function getCycleLength(number) {
+        let result = 1;
+
+        while (number > 1) {
+            number % 2 ? number = number * 3 + 1: number = number / 2;
+            result++;
+        }
+
+        return result;
+    }
+
+    for (let n = i; n <= j; n++) {
+        const count = getCycleLength(n);
+
+        if (answer < count)
+            answer = count;
+    }
+
+    return answer;
+}
+
+console.log(solution(1, 10)); // 20
+console.log(solution(100, 200)); // 125
+console.log(solution(201, 210)); // 89
+console.log(solution(900, 1000)); // 174
+```
+
+## 문제 2. 지뢰 찾기 (레벨 1)
+
+### 설명
+
+MxN 크기의 지뢰밭이 주어졌을 때의 힌트판을 구하라.
+
+### 예시
+
+> 첫 번째 줄은 행과 열의 길이이며, 그 다음 2차원 배열은 지뢰밭이다. 별(\*)은 지뢰, 마침표는 지뢰가 없는 칸이다.
+
+Input
+
+```
+4 4
+*...
+....
+.*..
+....
+```
+
+Output
+
+```
+*100
+2210
+1*10
+1110
+```
+
+### 풀이
+
+- 지뢰밭을 순회하며 상, 하, 좌, 우, 대각선을 검사하고 카운팅한다.
+
+```
+function solution(n, m, mines) {
+    const ans = new Array(n).fill().map(_ => new Array(m));
+    const dir = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+
+    function search(r, c) {
+        let count = 0;
+
+        for (let [a, b] of dir) {
+            if (r + a < 0 || r + a >= n || c + b < 0 || c + b >= n)
+                continue;
+
+            if (mines[r + a][c + b] === "*")
+                count++;
+        }
+
+        return count;
+    }
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (mines[i][j] === "*")
+                ans[i][j] = "*"
+            else
+                ans[i][j] = search(i, j);
+        }
+    }
+
+    return ans;
+}
+
+console.log(solution(4, 4, [["*", ".", ".","."], [".",".",".","."], [".","*",".","."], [".",".",".","."]]));
+console.log(solution(3, 5, [["*", "*", ".",".","."], [".",".",".",".","."], [".","*",".",".", "."]]));
+```
