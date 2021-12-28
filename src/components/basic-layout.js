@@ -30,7 +30,7 @@ const BasicLayout = ({ children, title, content }) => {
       <div className={basicLayoutTemplate}>
         <SideBar tags={tags} />
         <main className={postMain}>{children}</main>
-        <MarkdownNav title={title} content={content} />
+        <MarkdownNav title={title} content={content} mainClassName={postMain} />
       </div>
     </div>
   );

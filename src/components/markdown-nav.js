@@ -8,21 +8,25 @@ import {
 } from "./markdown-nav.module.css";
 import { getNavItems } from "../utils/markdown-parser";
 
-const MarkdownNav = ({ title, content }) => {
+const MarkdownNav = ({ title, content, mainClassName }) => {
   const [headings, setHeadings] = React.useState(null);
   React.useEffect(() => {
-    if (content) {
-      const headings = [
-        ...document.querySelectorAll("h1"),
-        ...document.querySelectorAll("h2"),
-        ...document.querySelectorAll("h3"),
-        ...document.querySelectorAll("h4"),
-      ];
-      setHeadings(headings);
+    if (content && mainClassName) {
+      const main = document.querySelector(`.${mainClassName}`);
+      const list = [...main.firstChild.childNodes].filter(
+        (node) =>
+          node.tagName === "H1" ||
+          node.tagName === "H2" ||
+          node.tagName === "H3" ||
+          node.tagName === "H4"
+      );
+
+      setHeadings(list);
     }
   }, [content]);
 
   if (!content) return <ul className={markdownNav}></ul>;
+
   const headingList = getNavItems(content).map((obj) => {
     let [hCount, hContent] = obj;
     hContent = hContent.replace("\r", "");
@@ -35,12 +39,12 @@ const MarkdownNav = ({ title, content }) => {
   });
 
   function clickHeading(e) {
-    const hContent = e.target.innerHTML;
+    if (e.target.id === "markdown_nav_top") {
+      headings[0].scrollIntoView();
+    } else {
+      const targetIdx = e.target.id.replace("markdown_nav_", "");
+      const $target = headings[Number(targetIdx) + 1];
 
-    if (hContent) {
-      const $target = headings.find(
-        (heading) => heading.innerHTML === hContent
-      );
       $target.scrollIntoView();
     }
   }
@@ -49,13 +53,21 @@ const MarkdownNav = ({ title, content }) => {
     <nav className={markdownNav}>
       <ul>
         <li className={markdownNavH1}>
-          <button onClick={clickHeading} onKeyDown={clickHeading}>
+          <button
+            id={`markdown_nav_top`}
+            onClick={clickHeading}
+            onKeyDown={clickHeading}
+          >
             {title}
           </button>
         </li>
-        {headingList.map((obj) => (
-          <li className={obj[0]} key={`markdown-nav:${obj[1]}`}>
-            <button onClick={clickHeading} onKeyDown={clickHeading}>
+        {headingList.map((obj, idx) => (
+          <li className={obj[0]} key={idx}>
+            <button
+              id={`markdown_nav_${idx}`}
+              onClick={clickHeading}
+              onKeyDown={clickHeading}
+            >
               {obj[1]}
             </button>
           </li>
