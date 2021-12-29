@@ -1,0 +1,54 @@
+---
+description: "프로그래머스 코딩테스트 연습문제 가장 긴 팰린드롬"
+title: "[프로그래머스] 가장 긴 팰린드롬"
+tag: ["코딩테스트"]
+date: "2021-12-29"
+summary: "앞뒤를 뒤집어도 똑같은 문자열을 팰린드롬(palindrome)이라고 합니다. 문자열 s가 주어질 때, s의 부분문자열(Substring)중 가장 긴 팰린드롬의 길이를 return 하는 solution 함수를 완성해 주세요."
+---
+
+> 코딩테스트 연습 > 연습문제 > [가장 긴 팰린드롬](https://programmers.co.kr/learn/courses/30/lessons/12904)
+
+## 풀이
+
+팰린드롬은 앞뒤를 뒤집어도 똑같은 문자열로, 다른 말로 표현하면 좌우로 절반을 나눴을 때 왼쪽 = 뒤집은 오른쪽이라는 뜻이다.
+따라서 최대 길이의 절반을 시작으로 하나씩 줄여가며 문자열을 탐색하는 것으로 찾을 수 있다.
+
+- 주의할 점은 앞뒤의 동일 여부를 판별할 때 가운데 문자 하나가 있어도 무방하다는 것.
+- ex) abccba도 팰린드롬이고, abcXcba도 팰린드롬이다. 후자가 문자열의 길이가 더 길다.
+
+```
+function solution(s) {
+    function isPalindrome(str1, str2) {
+        for (let i = 0; i < str1.length; i++)
+            if (str1[i] !== str2[str2.length - (i + 1)])
+                return false;
+
+        return true;
+    }
+
+    let answer = 1;
+    let len = Math.floor(s.length / 2);
+
+    for (let i = len; i > 0; i--) { // 최대 길이의 절반을 시작으로 1까지 줄여간다.
+        for (let j = 0; j <= s.length - i; j++) { // 문자열 s의 첫 번째 문자를 시작으로 오른쪽으로 한 칸씩 이동한다.
+            const left = s.slice(j, i + j);
+            const right1 = s.slice(i + j, i * 2 + j);
+
+            if (i * 2 + j + 1 <= s.length) { // 왼쪽과 오른쪽 가운데에 문자 하나를 낄 수 있다면
+                const right2 = s.slice(i + j + 1, i * 2 + j + 1);
+
+                if (isPalindrome(left, right2) && answer < left.length * 2 + 1)
+                    answer = left.length * 2 + 1;
+            }
+
+            if (isPalindrome(left, right1) && answer < left.length * 2)
+                answer = left.length * 2;
+        }
+
+        if (answer > 1)
+            break;
+    }
+
+    return answer;
+}
+```
