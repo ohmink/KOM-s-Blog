@@ -1,7 +1,7 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { indexMainPosition, indexMainList } from "./index.module.css";
-import SEO from "../components/seo";
+import SEO from "../components/wrappers/seo";
 import BasicLayout from "../components/basic-layout";
 import PostListItem from "../components/post-list-item";
 
