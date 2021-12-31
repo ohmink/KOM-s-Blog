@@ -1,5 +1,6 @@
 import * as React from "react";
 import { graphql } from "gatsby";
+import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import {
   post,
@@ -7,8 +8,14 @@ import {
   postInfo,
   postInfoTags,
 } from "./{mdx.slog}.module.css";
-import SEO from "../../components/seo";
+
+import SEO from "../../components/wrappers/seo";
 import BasicLayout from "../../components/basic-layout";
+import CodeBlock from "../../components/wrappers/code-block";
+
+const mdxComponents = {
+  pre: CodeBlock,
+};
 
 const BlogPost = ({ data }) => {
   return (
@@ -30,7 +37,9 @@ const BlogPost = ({ data }) => {
           </span>
           <p>{data.mdx.frontmatter.date}</p>
         </div>
-        <MDXRenderer>{data.mdx.body}</MDXRenderer>
+        <MDXProvider components={mdxComponents}>
+          <MDXRenderer>{data.mdx.body}</MDXRenderer>
+        </MDXProvider>
       </div>
     </BasicLayout>
   );
