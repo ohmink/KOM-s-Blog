@@ -2,6 +2,29 @@
   margin-top: 3rem;
 }
 
+.post img {
+  max-width: 100%;
+}
+
+.post table {
+  text-align: center;
+}
+
+.post thead,
+.post tbody tr {
+  background-color: white;
+}
+
+.post thead tr th,
+.post tbody tr td {
+  padding: 10px;
+}
+
+.post table {
+  padding: 1px;
+  background-color: lightgray;
+}
+
 .post-title {
   color: #45858c;
   margin: 3rem auto 0 0;
