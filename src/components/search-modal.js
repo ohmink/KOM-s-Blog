@@ -26,6 +26,7 @@ const Search = () => {
             date
           }
           slug
+          id
         }
       }
     }
@@ -33,6 +34,7 @@ const Search = () => {
     node.frontmatter.key = node.frontmatter.title.toLowerCase();
     return node;
   });
+
   const [result, setResult] = React.useState(nodes);
 
   function onChange(e) {
@@ -49,12 +51,6 @@ const Search = () => {
     const $target = e.target.closest(`.${searchResultItem}`);
     if ($target) $target.style.backgroundColor = "#eee";
   }
-
-  React.useEffect(() => {
-    const $searchResult = document.querySelector(`.${searchResult}`);
-    $searchResult.addEventListener("mouseover", mouseOver);
-    $searchResult.addEventListener("mouseout", mouseOut);
-  }, [result]);
 
   return (
     <div
@@ -83,9 +79,13 @@ const Search = () => {
           />
         </div>
         <div className={searchContentTitle}>Documentation</div>
-        <ul className={searchResult}>
+        <ul
+          className={searchResult}
+          onMouseOver={mouseOver}
+          onMouseOut={mouseOut}
+        >
           {result.map((node) => (
-            <li key={`search-result-${node.slug}`} className={searchResultItem}>
+            <li key={node.id} className={searchResultItem}>
               <Link to={`/post/${node.slug}`}>
                 <span>
                   <StaticImage
