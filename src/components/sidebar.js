@@ -25,7 +25,7 @@ const SideBar = ({ tags }) => {
       <ul className={sidebarList}>
         {tags.group.map((tag) => (
           <li
-            key={tag.fieldValue}
+            key={`sidebar-tag:${tag.fieldValue}`}
             id={tag.fieldValue}
             className={`${sidebarListItem} sidebar-tag-li`}
           >

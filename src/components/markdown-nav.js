@@ -62,9 +62,9 @@ const MarkdownNav = ({ title, content, mainClassName }) => {
           </button>
         </li>
         {headingList.map((obj, idx) => (
-          <li className={obj[0]} key={idx}>
+          <li className={obj[0]} key={`markdown-nav-key:${idx}`}>
             <button
-              id={`markdown_nav_${idx}`}
+              id={`markdown-nav-${idx}`}
               onClick={clickHeading}
               onKeyDown={clickHeading}
             >

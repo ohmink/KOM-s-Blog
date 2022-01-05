@@ -5,7 +5,7 @@ import oceanicNext from "prism-react-renderer/themes/oceanicNext";
 const codeBlockStyle = {
   padding: "1.5rem",
   borderRadius: "10px",
-  fontFamily: "-webkit-pictograph",
+  fontFamily: "auto",
 };
 
 const CodeBlock = (props) => {
