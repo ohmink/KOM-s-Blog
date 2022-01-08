@@ -17,6 +17,12 @@ module.exports = {
     "gatsby-plugin-mdx",
     "gatsby-plugin-sitemap",
     {
+      resolve: `gatsby-plugin-google-gtag`,
+      options: {
+        trackingIds: [process.env.TRACKING_ID],
+      },
+    },
+    {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: "https://ohmink.github.io",
@@ -25,12 +31,6 @@ module.exports = {
           "https://ohmink.github.io/sitemap/sitemap-0.xml",
         ],
         policy: [{ userAgent: "*", allow: "/" }],
-      },
-    },
-    {
-      resolve: "gatsby-plugin-google-analytics",
-      options: {
-        trackingId: process.env.TRACKING_ID,
       },
     },
     {
@@ -43,9 +43,6 @@ module.exports = {
     {
       resolve: "gatsby-plugin-web-font-loader",
       options: {
-        typekit: {
-          id: process.env.TYPEKIT_ID,
-        },
         google: {
           families: ["Merriweather", "Noto Sans Korean"],
         },
