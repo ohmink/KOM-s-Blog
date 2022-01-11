@@ -18,6 +18,10 @@ const SEO = ({ title, description }) => {
 
   return (
     <Helmet title={seo.title}>
+      <link
+        rel="shortcut icon"
+        href="https://user-images.githubusercontent.com/45379812/148945118-63fb140c-f985-4e29-9da6-bc41b0969b13.png"
+      />
       <meta
         name="google-site-verification"
         content="tQIydBOpCDIxmpP3kRsRsK50hOTgkJV-xwkz3ouSesI"
