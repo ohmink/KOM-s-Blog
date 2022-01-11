@@ -33,7 +33,7 @@ const BlogPage = ({ location, data }) => {
         );
       }
     }
-  }, [location, originData]);
+  }, []);
 
   const position = location.state
     ? location.state.tagName === VIEWALL
