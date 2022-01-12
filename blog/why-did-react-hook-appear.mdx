@@ -1,0 +1,214 @@
+---
+description: "리액트 훅의 등장 이유를 알아보고 클래스 컴포넌트와 함수 컴포넌트를 비교하며 왜 함수 컴포넌트를 선택해야 하는지 알아보자."
+title: "리액트(React) 훅(Hook)은 왜 등장했을까? (feat. Class vs. Function)"
+tag: ["React"]
+date: "2022-01-12"
+summary: "리액트 훅의 등장 이유를 알아보고 클래스 컴포넌트와 함수 컴포넌트를 비교하며 왜 함수 컴포넌트를 선택해야 하는지 알아보자."
+---
+
+저는 2020년 11월 쯤에 처음으로 React를 접했고, 시작할 때부터 함수형 컴포넌트와 훅을 사용했습니다. 그동안 아무런 의문도 없이 함수 컴포넌트를 선택하고 있었는데, 리액트 훅에 대해 정리하려고 보니 의문이 생겼습니다.
+
+- 리액트 훅은 왜 만들어졌을까?
+- 함수 컴포넌트와 훅을 사용하는 것이 클래스(Class) 컴포넌트보다 좋은 점이 무엇일까?
+- 둘의 차이점은 뭘까?
+
+이에 대해 알기 위해서 처음으로 돌아가 공부하고 이 글로 정리하게 되었습니다. 주로 리액트 공식 홈페이지의 문서와 해외 사이트를 보고 학습했습니다.
+
+> 훅(Hook)은 리액트 버전 16.8부터 리액트 요소로 추가되었는데 이것으로 인해 함수형 컴포넌트에서 상태 값과 여러 React의 기능들을 사용할 수 있게 되었습니다.
+
+## 이유
+
+한 줄로 요약하면 리액트 훅은 훅 등장 이전에 부딪혀왔던 수많은 문제들을 해결하기 위해 만들어졌습니다.
+
+그렇다면 어떤 문제들이 있었을까요?
+
+### 컴포넌트 사이에서 상태 로직을 재사용이 어렵습니다
+
+리액트는 컴포넌트 간에 재사용 가능한 로직을 붙이는 방법을 제공하지 않습니다.
+
+render props나 고차 컴포넌트와 같은 패턴으로 해결할 수 있으나, 이런 것들을 사용하는 것은 컴포넌트의 재구성을 강요하고 코드의 추적을 어렵게 만듭니다.
+
+> [render props](https://ko.reactjs.org/docs/render-props.html)란, React 컴포넌트 간에 코드를 공유하기 위해 함수 props를 이용하는 간단한 테크닉입니다.
+
+> [고차 컴포넌트(HOC, Higher Order Component)](https://ko.reactjs.org/docs/higher-order-components.html)는 컴포넌트 로직을 재사용하기 위한 React의 고급 기술입니다. 고차 컴포넌트(HOC)는 React API의 일부가 아니며, React의 구성적 특성에서 나오는 패턴입니다.
+>
+> 구체적으로, 고차 컴포넌트는 컴포넌트를 가져와 새 컴포넌트를 반환하는 함수
+
+그리고 리액트 앱을 개발자 도구에서 본다면 이러한 고차 컴포넌트, render props, providers, consumers 등으로 인해 래퍼 지옥(wrapper hell)을 볼 수도 있습니다. 이러한 래퍼 지옥은 [개발자 도구](https://github.com/facebook/react-devtools/pull/503)에서 걸러낼 수 있게 되었으나, 그럼에도 리액트 훅의 이점을 상쇄할 수는 없습니다.
+
+![래퍼 지옥](https://cloud.githubusercontent.com/assets/3934294/22809754/46231610-eee9-11e6-9068-cd1a4bdf4c5c.gif)
+
+Hook은 계층의 변화 없이 상태 관련 로직을 재사용할 수 있도록 도와줍니다.
+
+### 복잡한 컴포넌트(Class)들은 이해하기 어렵습니다
+
+이것은 생명주기 class 메서드가 관련이 없는 로직들은 모아놓고, 관련이 있는 로직들은 여러 개의 메서드에 나누어 놓는 경우가 자주 있다는 뜻입니다. 간단한 예로 componentDidMount에서 이벤트 리스너를 추가했다면 componentWillUnmount에서 이벤트 리스너를 해제하는 작업처럼 말이죠.
+
+리액트 문서에서는 다음과 같은 예시를 보여줍니다.
+
+```
+class FriendStatusWithCounter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0, isOnline: null };
+    this.handleStatusChange = this.handleStatusChange.bind(this);
+  }
+
+  componentDidMount() {
+    document.title = `You clicked ${this.state.count} times`;
+    ChatAPI.subscribeToFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+
+  componentDidUpdate() {
+    document.title = `You clicked ${this.state.count} times`;
+  }
+
+  componentWillUnmount() {
+    ChatAPI.unsubscribeFromFriendStatus(
+      this.props.friend.id,
+      this.handleStatusChange
+    );
+  }
+
+  handleStatusChange(status) {
+    this.setState({
+      isOnline: status.isOnline
+    });
+  }
+```
+
+document.title을 설정하는 로직이 componentDidMount와 componentDidUpdate에 나누어져 있고, 구독(subscription)로직 또한 componentDidMount와 componentWillUnmount에 나누어져 있습니다. 그리고 componentDidMount는 이 두 가지 작업을 위한 코드를 모두 가지고 있습니다.
+
+이것을 훅을 사용한 함수 컴포넌트로 변경한다면 이렇게 고칠 수 있습니다.
+
+```
+function FriendStatusWithCounter(props) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = `You clicked ${count} times`;
+  });
+
+  const [isOnline, setIsOnline] = useState(null);
+  useEffect(() => {
+    function handleStatusChange(status) {
+      setIsOnline(status.isOnline);
+    }
+
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+    };
+  });
+  // ...
+}
+```
+
+useEffect 훅을 두 번 사용하는 것으로 서로 관련이 없는 로직들을 둘로 분리하는 것에 성공했습니다. 게다가 코드 역시 더 간결하기까지 합니다. 이렇게 훅을 이용하면 생명 주기 메서드에 따라 코드를 나누는 게 아니라, 목적에 따라 코드를 나눌 수 있습니다.
+
+### 클래스는 사람과 기계를 혼란스럽게 합니다
+
+React에서 클래스를 사용하기 위해서는 반드시 this를 이해해야 합니다. 문제는 JavaScript에서의 this는 다른 언어에서와 다르게 동작한다는 겁니다. 이는 사용자에게 큰 혼란을 줄 뿐더러 코드의 재사용성과 구성을 어렵게 합니다. 또한 클래스는 이벤트 핸들러가 등록되는 방법을 정확하게 알고 있어야 했고 이것은 코드를 장황하게 만들 수 있습니다. 이 모든 문제들은 사용자가 코드를 이해하기 어렵게 합니다. 클래스는 코드의 최소화를 힘들게 만들고, 핫 리로딩을 깨지기 쉽고 신뢰할 수 없게 합니다.
+
+이러한 문제들을 해결하기 위해서 훅은 클래스 없이 리액트 기능들을 사용하는 방법을 제시합니다.
+
+> 핫 리로딩은 앱을 계속 실행하고 런타임에 편집한 파일의 새 버전을 주입하는 것입니다.
+
+## 함수 컴포넌트를 선택한 이유
+
+이러한 이유들로 리액트 훅이 등장한 만큼 리액트 훅을 활용한 함수 컴포넌트는 다음과 같은 이점을 가지고 있습니다.
+
+### 재사용과 유지 관리
+
+기능적으로 차이가 없을지라도 코드가 간결해진다는 건 코딩을 하기 더 편할 뿐만 아니라 번들 크기까지 줄일 수 있습니다.
+
+또한 훅을 사용하면 로직과 UI를 더 쉽게 분리할 수 있고 HOC나 render props이 필요하지 않습니다. 따라서 로직과 UI를 보다 직관적으로 구성할 수 있고, 그것은 컴포넌트를 공유할 때 훨씬 더 쉽게 이해하게 하고, 유지 관리할 수 있게 하며, 재사용할 수 있게 합니다.
+
+### this를 사용하지 않습니다
+
+클래스에서는 this를 사용할 때 유의해야하지만 함수 컴포넌트를 사용하면 this에 대한 걱정을 하지 않아도 됩니다.
+
+### 메서드 바인딩을 할 필요가 없습니다
+
+다음은 ShowCount 컴포넌트로 레이블을 클릭하면 상태 수를 업데이트하는 로직입니다.
+
+```
+export class ShowCount extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+    this.handleClickEvent = this.handleClickEvent.bind(this);
+  }
+  componentDidMount() {
+    this.setState({
+      count: this.props.count
+    });
+  }
+
+  handleClickEvent() {
+    this.setState({count: this.state.count + 1});
+  }
+
+  render() {
+    return (
+      <div>
+        <h1 onClick={this.handleClickEvent} > Count : {this.state.count} </h1>
+      </div>
+    );
+  }
+}
+```
+
+이 코드에서는 handleClickEvent를 사용하기 위해 그것을 컴포넌트의 this에 바인딩해야 했습니다.(메서드가 실행될 때 실행 컨텍스트가 다르기 때문입니다.)
+
+```
+this.handleClickEvent = this.handleClickEvent.bind(this);
+```
+
+이것을 함수 컴포넌트로 구현하면 다음과 같습니다.
+
+```
+export function ShowCount(props) {
+  const [count, setCount] = useState();
+
+  useEffect(() => {
+    setCount(props.count);
+  }, [props.count]);
+
+  function handleClickEvent() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1 onClick={handleClickEvent}> Count : {count} </h1>
+    </div>
+  );
+}
+```
+
+코드에서 보이다시피 별다른 바인딩 없이 handleClickEvent를 onClick에 추가하는 것으로 끝났습니다.
+
+### 관련된 로직만 같은 위치에서 사용할 수 있습니다
+
+앞서 언급했던, 훅이 등장한 두 번째 이유에서 정리했듯 생명 주기 메서드에 따라 코드를 분리하는 게 아닌 목적에 따른 로직을 모을 수 있습니다.
+
+## 결론
+
+리액트에서는 계속해서 클래스 컴포넌트를 지원할 것이라고 얘기했으나 함수 컴포넌트와 훅을 사용하여 리액트를 설명하는데 더 집중할 것이라고 합니다. 최근에 리액트를 시작하여 클래스 컴포넌트를 사용하지 않았다면, 앞으로도 사용할 일이 없을지도 모릅니다.
+
+하지만 누가 알겠습니까. 언젠가 클래스 컴포넌트로 만들어진 코드를 리팩토링할지도 모르고, 설령 그럴 일이 없다고 할지라도 클래스와 함수 컴포넌트의 차이점을, 훅의 등장 배경을 이해한다면 리액트를 보다 강력하게 사용할 수 있을 거라고 생각합니다.
+
+"그냥" 훅을 사용하는 게 아니라, "왜" 사용하는지 알았으니 다음 글에서는 어떤 훅을 어떤 상황에서 사용하는지 알아볼 예정입니다.
+
+## 학습 및 예제 출처
+
+[리액트 훅 소개](https://ko.reactjs.org/docs/hooks-intro.html)
+[React Class Component vs. Functional Component: What’s the Difference](https://www.telerik.com/blogs/react-class-component-vs-functional-component-how-choose-whats-difference?kw=&cpn=15428364719&&utm_source=google&utm_medium=cpc&utm_campaign=kendo-ui-react-trial-search-bms-APJ&ad_group=DSA+Ad+Group&utm_term=DYNAMIC+SEARCH+ADS&ad_copy=&ad_type=DSA&ad_size=&ad_placement=&gclid=Cj0KCQiA8vSOBhCkARIsAGdp6RQbvQ_20LJJ0Ah669_iUzHFQvHSQV_7Gilox2ycDQFy3440Vxph7AMaAt_tEALw_wcB&gclsrc=aw.ds)
+[6 Reasons to Use React Hooks Instead of Classes](https://blog.bitsrc.io/6-reasons-to-use-react-hooks-instead-of-classes-7e3ee745fe04)
+[React Function Components with hooks vs Class Components](https://stackoverflow.com/questions/53062732/react-function-components-with-hooks-vs-class-components)
+[https://betterprogramming.pub/react-hooks-vs-classes-add2676a32f2](https://betterprogramming.pub/react-hooks-vs-classes-add2676a32f2)
