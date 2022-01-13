@@ -20,11 +20,7 @@ const Header = () => {
 
   return (
     <header className={header}>
-      <a
-        href={process.env.HOME_PAGE_URL}
-        rel="noreferrer"
-        className={headerTitle}
-      >
+      <a href={process.env.SITE_URL} rel="noreferrer" className={headerTitle}>
         KOM's Blog
       </a>
       <div className={headerContents}>
