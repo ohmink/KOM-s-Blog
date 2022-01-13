@@ -42,7 +42,7 @@ const MarkdownNav = ({ title, content, mainClassName }) => {
     if (e.target.id === "markdown_nav_top") {
       headings[0].scrollIntoView();
     } else {
-      const targetIdx = e.target.id.replace("markdown_nav_", "");
+      const targetIdx = e.target.id.replace("markdown-nav-", "");
       const $target = headings[Number(targetIdx) + 1];
 
       $target.scrollIntoView();
