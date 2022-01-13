@@ -22,17 +22,17 @@ module.exports = {
         trackingIds: [process.env.TRACKING_ID],
       },
     },
-    {
-      resolve: "gatsby-plugin-robots-txt",
-      options: {
-        host: "https://ohmink.github.io",
-        sitemap: [
-          "https://ohmink.github.io/sitemap/sitemap-index.xml",
-          "https://ohmink.github.io/sitemap/sitemap-0.xml",
-        ],
-        policy: [{ userAgent: "*", allow: "/" }],
-      },
-    },
+    // {
+    //   resolve: "gatsby-plugin-robots-txt",
+    //   options: {
+    //     host: "https://ohmink.github.io",
+    //     sitemap: [
+    //       "https://ohmink.github.io/sitemap/sitemap-index.xml",
+    //       "https://ohmink.github.io/sitemap/sitemap-0.xml",
+    //     ],
+    //     policy: [{ userAgent: "*", allow: "/" }],
+    //   },
+    // },
     {
       resolve: "gatsby-source-filesystem",
       options: {
