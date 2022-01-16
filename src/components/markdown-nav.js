@@ -23,7 +23,7 @@ const MarkdownNav = ({ title, content, mainClassName }) => {
 
       setHeadings(list);
     }
-  }, [content]);
+  }, []);
 
   if (!content) return <ul className={markdownNav}></ul>;
 
