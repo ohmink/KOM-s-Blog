@@ -15,7 +15,19 @@ function closeModal(e) {
   if ($target.id === "search-layout") e.target.style.display = "none";
 }
 
-const Search = () => {
+const Search = (_props, ref) => {
+  const searchRef = React.useRef();
+  const inputRef = React.useRef();
+
+  React.useImperativeHandle(ref, () => ({
+    display: () => {
+      searchRef.current.style.display = "flex";
+    },
+    focus: () => {
+      inputRef.current.focus();
+    },
+  }));
+
   const nodes = useStaticQuery(graphql`
     query {
       allMdx {
@@ -59,6 +71,7 @@ const Search = () => {
       onClick={closeModal}
       onKeyDown={closeModal}
       role="none"
+      ref={searchRef}
     >
       <div className={searchModal}>
         <div className={searchInputLayout}>
@@ -75,6 +88,7 @@ const Search = () => {
             type="search"
             id="search-input"
             placeholder="제목으로 문서 검색"
+            ref={inputRef}
             onChange={onChange}
           />
         </div>
@@ -115,4 +129,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default React.forwardRef(Search);

@@ -7,15 +7,10 @@ import {
 } from "./header.module.css";
 import { StaticImage } from "gatsby-plugin-image";
 
-const Header = () => {
+const Header = ({ searchRef }) => {
   function openSearch() {
-    const $searchLayout = document.getElementById("search-layout");
-    if ($searchLayout) {
-      $searchLayout.style.display = "flex";
-
-      const $searchInput = document.getElementById("search-input");
-      $searchInput.focus();
-    }
+    searchRef.current.display();
+    searchRef.current.focus();
   }
 
   return (

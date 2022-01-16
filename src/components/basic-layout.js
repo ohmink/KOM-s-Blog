@@ -22,11 +22,12 @@ const BasicLayout = ({ children, title, content }) => {
       }
     }
   `).allMdx;
+  const searchRef = React.useRef(null);
 
   return (
     <div className={basicLayout}>
-      <Search />
-      <Header />
+      <Search ref={searchRef} />
+      <Header searchRef={searchRef} />
       <div className={basicLayoutTemplate}>
         <SideBar tags={tags} />
         <main className={postMain}>{children}</main>
