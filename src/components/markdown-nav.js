@@ -1,48 +1,33 @@
 import * as React from "react";
-import {
-  markdownNav,
-  markdownNavH1,
-  markdownNavH2,
-  markdownNavH3,
-  markdownNavH4,
-} from "./markdown-nav.module.css";
+import * as MarkdownStyle from "./markdown-nav.module.css";
 import { getNavItems } from "../utils/markdown-parser";
 
 const MarkdownNav = ({ title, content, mainClassName }) => {
   const [headings, setHeadings] = React.useState(null);
+
   React.useEffect(() => {
     if (content && mainClassName) {
+      const tagNames = ["H1", "H2", "H3", "H4"];
       const main = document.querySelector(`.${mainClassName}`);
-      const list = [...main.firstChild.childNodes].filter(
-        (node) =>
-          node.tagName === "H1" ||
-          node.tagName === "H2" ||
-          node.tagName === "H3" ||
-          node.tagName === "H4"
+      const list = [...main.firstChild.childNodes].filter((node) =>
+        tagNames.includes(node.tagName)
       );
 
       setHeadings(list);
     }
   }, []);
 
-  if (!content) return <ul className={markdownNav}></ul>;
+  if (!content) return <ul className={MarkdownStyle.markdownNav}></ul>;
 
-  const headingList = getNavItems(content).map((obj) => {
-    let [hCount, hContent] = obj;
-    hContent = hContent.replace("\r", "");
-
-    if (hCount.length === 1) return [markdownNavH2, hContent];
-    else if (hCount.length === 2) return [markdownNavH3, hContent];
-    else if (hCount.length === 3) return [markdownNavH4, hContent];
-
-    return [markdownNavH1, hContent];
-  });
+  const headingList = getNavItems(content, MarkdownStyle);
 
   function clickHeading(e) {
-    if (e.target.id === "markdown_nav_top") {
+    const shortcutBtn = e.target.closest("button");
+
+    if (shortcutBtn.id === "markdown_nav_top") {
       headings[0].scrollIntoView();
     } else {
-      const targetIdx = e.target.id.replace("markdown-nav-", "");
+      const targetIdx = shortcutBtn.id.replace("markdown-nav-", "");
       const $target = headings[Number(targetIdx) + 1];
 
       $target.scrollIntoView();
@@ -50,15 +35,15 @@ const MarkdownNav = ({ title, content, mainClassName }) => {
   }
 
   return (
-    <nav className={markdownNav}>
+    <nav className={MarkdownStyle.markdownNav}>
       <ul>
-        <li className={markdownNavH1}>
+        <li className={MarkdownStyle.markdownNavH1}>
           <button
             id={`markdown_nav_top`}
             onClick={clickHeading}
             onKeyDown={clickHeading}
           >
-            {title}
+            <span>{title}</span>
           </button>
         </li>
         {headingList.map((obj, idx) => (
@@ -68,7 +53,7 @@ const MarkdownNav = ({ title, content, mainClassName }) => {
               onClick={clickHeading}
               onKeyDown={clickHeading}
             >
-              {obj[1]}
+              <span>{obj[1]}</span>
             </button>
           </li>
         ))}
