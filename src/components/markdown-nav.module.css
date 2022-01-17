@@ -8,13 +8,14 @@
 
 .markdown-nav ul {
   height: fit-content;
-  width: 70%;
+  width: 80%;
 
   margin-top: 3rem;
-  padding: 0.5rem 2rem 1rem 1rem;
+  padding: 0.5rem 0 1rem 1rem;
 
   border-left: 1px solid #ddd;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .markdown-nav li {
@@ -22,9 +23,17 @@
 }
 
 .markdown-nav li button {
+  width: 100%;
   border: none;
   text-align: left;
   background-color: white;
+}
+
+.markdown-nav li button span {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .markdown-nav li button:hover {
