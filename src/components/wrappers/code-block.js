@@ -3,6 +3,7 @@ import Highlight, { defaultProps } from "prism-react-renderer";
 import oceanicNext from "prism-react-renderer/themes/oceanicNext";
 
 const codeBlockStyle = {
+  margin: "2rem 0",
   padding: "1.5rem",
   borderRadius: "10px",
   fontFamily: "auto",
