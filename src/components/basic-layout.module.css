@@ -15,8 +15,14 @@ body {
 }
 
 .post-main {
-  width: 55%;
+  width: 50%;
   margin: 0 auto 3rem auto;
   padding-left: 3rem;
-  padding-right: 5rem;
+  padding-right: 3rem;
+}
+
+@media screen and (max-width: 1158px) {
+  .post-main {
+    width: 65%;
+  }
 }

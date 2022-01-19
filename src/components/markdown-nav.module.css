@@ -4,6 +4,7 @@
   position: fixed;
   right: 0;
   background-color: white;
+  padding-left: 0;
 }
 
 .markdown-nav ul {
@@ -54,4 +55,10 @@
 
 .markdown-nav-h4 {
   margin-left: 3rem;
+}
+
+@media screen and (max-width: 1158px) {
+  .markdown-nav {
+    display: none;
+  }
 }
