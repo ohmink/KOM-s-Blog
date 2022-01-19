@@ -1,8 +1,8 @@
 import * as React from "react";
 import { graphql } from "gatsby";
 import { indexMainPosition, indexMainList } from "./index.module.css";
-import SEO from "../components/wrappers/seo";
-import BasicLayout from "../components/basic-layout";
+import Seo from "../components/wrappers/seo";
+import Layout from "../components/layout";
 import PostListItem from "../components/post-list-item";
 
 const BlogPage = ({ location, data }) => {
@@ -33,7 +33,7 @@ const BlogPage = ({ location, data }) => {
         );
       }
     }
-  }, [location.state]);
+  }, [location.state, originData]);
 
   const position = location.state
     ? location.state.tagName === VIEWALL
@@ -42,8 +42,8 @@ const BlogPage = ({ location, data }) => {
     : "Documentation";
 
   return (
-    <BasicLayout>
-      <SEO />
+    <Layout>
+      <Seo />
       <p className={indexMainPosition}>{position}</p>
       <ul className={indexMainList}>
         {postList.map((node) => (
@@ -57,7 +57,7 @@ const BlogPage = ({ location, data }) => {
           />
         ))}
       </ul>
-    </BasicLayout>
+    </Layout>
   );
 };
 

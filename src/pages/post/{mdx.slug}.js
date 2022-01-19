@@ -2,15 +2,10 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
-import {
-  post,
-  postTitle,
-  postInfo,
-  postInfoTags,
-} from "./{mdx.slog}.module.css";
+import * as style from "./{mdx.slog}.module.css";
 
-import SEO from "../../components/wrappers/seo";
-import BasicLayout from "../../components/basic-layout";
+import Layout from "../../components/layout";
+import Seo from "../../components/wrappers/seo";
 import CodeBlock from "../../components/wrappers/code-block";
 
 const mdxComponents = {
@@ -19,18 +14,18 @@ const mdxComponents = {
 
 const BlogPost = ({ data }) => {
   return (
-    <BasicLayout
+    <Layout
       title={data.mdx.frontmatter.title}
       content={data.mdx.internal.content}
     >
-      <SEO
+      <Seo
         title={data.mdx.frontmatter.title}
         description={data.mdx.frontmatter.description || "nothin’"}
       />
-      <div className={post}>
-        <h1 className={postTitle}>{data.mdx.frontmatter.title}</h1>
-        <div className={postInfo}>
-          <span className={postInfoTags}>
+      <div className={style.post}>
+        <h1 className={style.postTitle}>{data.mdx.frontmatter.title}</h1>
+        <div className={style.postInfo}>
+          <span className={style.postInfoTags}>
             {data.mdx.frontmatter.tag.map((name) => (
               <p key={`post-tag-${name}`}>#{name}</p>
             ))}
@@ -41,7 +36,7 @@ const BlogPost = ({ data }) => {
           <MDXRenderer>{data.mdx.body}</MDXRenderer>
         </MDXProvider>
       </div>
-    </BasicLayout>
+    </Layout>
   );
 };
 
