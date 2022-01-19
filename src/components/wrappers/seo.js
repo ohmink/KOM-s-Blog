@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { useLocation } from "@reach/router";
 import { useStaticQuery, graphql } from "gatsby";
 
-const SEO = ({ title, description }) => {
+const Seo = ({ title, description }) => {
   const { pathname } = useLocation();
   const { site } = useStaticQuery(seoQuery);
 
@@ -39,14 +39,14 @@ const SEO = ({ title, description }) => {
   );
 };
 
-export default SEO;
+export default Seo;
 
-SEO.propTypes = {
+Seo.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
 };
 
-SEO.defaultProps = {
+Seo.defaultProps = {
   title: "KOM's Blog",
   description:
     "웹 개발 지식을 정리하는 소박한 공간, 권오민 블로그, 프론트엔드 개발",
