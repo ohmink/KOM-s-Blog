@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family: "Merriweather", "Noto Sans Korean";
+}
+
+.web-layout {
+  height: 100%;
+  width: 100%;
+}
+
+.web-layout-template {
+  display: flex;
+  flex-direction: row;
+  padding-top: 2rem;
+}
+
+.web-layout-main {
+  width: 50%;
+  margin: 0 auto 3rem auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+@media screen and (max-width: 1158px) {
+  .post-main {
+    width: 65%;
+  }
+}
