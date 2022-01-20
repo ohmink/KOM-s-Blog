@@ -1,10 +1,9 @@
-import React from "react";
-import { isMobile } from "react-device-detect";
+import React, { useEffect, useState } from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import WebLayout from "./layout/web-layout";
 import MobileLayout from "./layout/mobile-layout";
 
-const Layout = ({ children, title, content }) => {
+const Layout = ({ children, isMobile, title, content }) => {
   const tags = useStaticQuery(graphql`
     query SeletByTag {
       allMdx {
@@ -16,8 +15,17 @@ const Layout = ({ children, title, content }) => {
       }
     }
   `).allMdx;
+  const [isLoading, setIsLoading] = useState(true);
+  const [deviceState, setDeviceState] = useState(true);
 
-  return isMobile ? (
+  useEffect(() => {
+    setIsLoading(false);
+    setDeviceState(isMobile);
+  }, [isMobile]);
+
+  if (isLoading) return <></>;
+
+  return deviceState ? (
     <MobileLayout tags={tags} children={children} />
   ) : (
     <WebLayout

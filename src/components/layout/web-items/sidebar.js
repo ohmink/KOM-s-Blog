@@ -17,7 +17,7 @@ const SideBar = ({ tags }) => {
         <StaticImage
           placeholder="tracedSVG"
           alt="Documentation"
-          src="../images/documentation_icon.png"
+          src="../../../images/documentation_icon.png"
           height={20}
         />
         <p>DOCUMENTATION ({tags.totalCount})</p>

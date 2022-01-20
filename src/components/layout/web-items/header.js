@@ -27,7 +27,7 @@ const Header = ({ searchRef }) => {
           <StaticImage
             placeholder="tracedSVG"
             alt="Search"
-            src="../images/search_icon.png"
+            src="../../../images/search_icon.png"
             height={20}
           />
         </button>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { graphql } from "gatsby";
+import { isMobile } from "react-device-detect";
 import { indexMainPosition, indexMainList } from "./index.module.css";
 import Seo from "../components/wrappers/seo";
 import Layout from "../components/layout";
@@ -42,7 +43,7 @@ const BlogPage = ({ location, data }) => {
     : "Documentation";
 
   return (
-    <Layout>
+    <Layout isMobile={isMobile}>
       <Seo />
       <p className={indexMainPosition}>{position}</p>
       <ul className={indexMainList}>

@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
+import { isMobile } from "react-device-detect";
 import * as style from "./{mdx.slog}.module.css";
 
 import Layout from "../../components/layout";
@@ -15,6 +16,7 @@ const mdxComponents = {
 const BlogPost = ({ data }) => {
   return (
     <Layout
+      isMobile={isMobile}
       title={data.mdx.frontmatter.title}
       content={data.mdx.internal.content}
     >

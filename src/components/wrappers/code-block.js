@@ -7,6 +7,7 @@ const codeBlockStyle = {
   padding: "1.5rem",
   borderRadius: "10px",
   fontFamily: "auto",
+  overflowX: "auto",
 };
 
 const CodeBlock = (props) => {

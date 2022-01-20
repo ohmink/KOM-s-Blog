@@ -1,12 +1,16 @@
 import * as React from "react";
+import { mobileTagsContainer, mobileTag } from "./mobile-nav.module.css";
+import MobileTagBox from "./mobile-tag-box";
 
 const MobileNav = ({ tags = ["test1", "test2"] }) => {
   return (
-    <div>
+    <div className={mobileTagsContainer}>
       {tags.group.map((tag) => (
-        <li key={`sidebar-tag:${tag.fieldValue}`} id={tag.fieldValue}>
-          {tag.fieldValue} ({tag.totalCount})
-        </li>
+        <MobileTagBox
+          key={`sidebar-tag:${tag.fieldValue}`}
+          tagName={tag.fieldValue}
+          className={mobileTag}
+        />
       ))}
     </div>
   );
