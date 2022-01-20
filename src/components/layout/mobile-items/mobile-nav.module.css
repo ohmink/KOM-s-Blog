@@ -1,0 +1,13 @@
+.mobile-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  margin: 4rem auto 2rem auto;
+}
+.mobile-tag {
+  margin: 0.125rem 0.375rem 0.125rem 0;
+  padding: 0.375rem;
+  border-radius: 15px;
+  border: 1px solid #1f818c;
+  color: #1f818c;
+}
