@@ -3,7 +3,7 @@ import { graphql, useStaticQuery } from "gatsby";
 import WebLayout from "./layout/web-layout";
 import MobileLayout from "./layout/mobile-layout";
 
-const Layout = ({ children, isMobile, title, content }) => {
+const Layout = ({ children, isMobile, title, content, selectedTag }) => {
   const tags = useStaticQuery(graphql`
     query SeletByTag {
       allMdx {
@@ -26,13 +26,14 @@ const Layout = ({ children, isMobile, title, content }) => {
   if (isLoading) return <></>;
 
   return deviceState ? (
-    <MobileLayout tags={tags} children={children} />
+    <MobileLayout tags={tags} selectedTag={selectedTag} children={children} />
   ) : (
     <WebLayout
       tags={tags}
       children={children}
       title={title}
       content={content}
+      selectedTag={selectedTag}
     />
   );
 };

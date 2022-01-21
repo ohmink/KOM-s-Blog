@@ -1,19 +1,37 @@
 import * as React from "react";
-import {
-  sidebar,
-  sidebarTitle,
-  sidebarList,
-  sidebarListItem,
-  sidebarListItemLink,
-} from "./sidebar.module.css";
+import * as Styles from "./sidebar.module.css";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
 
-const SideBar = ({ tags }) => {
+const SideBar = ({ tags, selectedTag }) => {
   const VIEWALL = "view-all";
+  const ulRef = React.useRef();
+
+  const reset = () => {
+    ulRef.current.childNodes.forEach((node) => {
+      node.style.borderLeftColor = "var(--theme-ui-colors-grey-30, #d9d7e0)";
+      node.firstChild.style.color = "black";
+    });
+  };
+
+  React.useEffect(() => {
+    if (selectedTag === VIEWALL) {
+      reset();
+    } else {
+      const currentTag = [...ulRef.current.childNodes].find(
+        (node) => node.id === selectedTag
+      );
+
+      if (currentTag) {
+        currentTag.style.borderLeftColor = "#45858C";
+        currentTag.firstChild.style.color = "#45858C";
+      }
+    }
+  }, [tags, selectedTag]);
+
   return (
-    <nav className={sidebar}>
-      <Link to="/" state={{ tagName: VIEWALL }} className={sidebarTitle}>
+    <nav className={Styles.sidebar}>
+      <Link to="/" state={{ tagName: VIEWALL }} className={Styles.sidebarTitle}>
         <StaticImage
           placeholder="tracedSVG"
           alt="Documentation"
@@ -22,17 +40,18 @@ const SideBar = ({ tags }) => {
         />
         <p>DOCUMENTATION ({tags.totalCount})</p>
       </Link>
-      <ul className={sidebarList}>
+      <ul className={Styles.sidebarList} ref={ulRef}>
         {tags.group.map((tag) => (
           <li
             key={`sidebar-tag:${tag.fieldValue}`}
             id={tag.fieldValue}
-            className={`${sidebarListItem} sidebar-tag-li`}
+            className={Styles.sidebarListItem}
           >
             <Link
               to="/"
               state={{ tagName: tag.fieldValue }}
-              className={sidebarListItemLink}
+              className={Styles.sidebarListItemLink}
+              onClick={reset}
             >
               {tag.fieldValue} ({tag.totalCount})
             </Link>

@@ -10,42 +10,26 @@ const BlogPage = ({ location, data }) => {
   const VIEWALL = "view-all";
   const originData = data.allMdx.nodes;
   const [postList, setPostList] = React.useState(originData);
+  const [selectedTag, setSelectedTag] = React.useState(VIEWALL);
 
   React.useEffect(() => {
     const state = location.state;
-    const tagName = state ? state.tagName : null;
+    const tagName = state ? state.tagName : VIEWALL;
 
-    if (state && tagName) {
-      const tagBtns = document.querySelectorAll(".sidebar-tag-li");
-      tagBtns.forEach((tagBtn) => {
-        tagBtn.style.borderLeftColor =
-          "var(--theme-ui-colors-grey-30, #d9d7e0)";
-        tagBtn.firstChild.style.color = "black";
-      });
-
-      if (tagName === VIEWALL) setPostList(originData);
-      else {
-        const selectedTag = document.getElementById(tagName);
-        selectedTag.style.borderLeftColor = "#45858C";
-        selectedTag.firstChild.style.color = "#45858C";
-
-        setPostList(
-          originData.filter((post) => post.frontmatter.tag.includes(tagName))
-        );
-      }
-    }
+    setSelectedTag(() => tagName);
+    setPostList(() =>
+      tagName === VIEWALL
+        ? originData
+        : originData.filter((post) => post.frontmatter.tag.includes(tagName))
+    );
   }, [location.state, originData]);
 
-  const position = location.state
-    ? location.state.tagName === VIEWALL
-      ? "Documentation"
-      : `Documentation > ${location.state.tagName}`
-    : "Documentation";
-
   return (
-    <Layout isMobile={isMobile}>
+    <Layout isMobile={isMobile} selectedTag={selectedTag}>
       <Seo />
-      <p className={indexMainPosition}>{position}</p>
+      <p className={indexMainPosition}>
+        Documentation {selectedTag === VIEWALL ? "" : `> ${selectedTag}`}
+      </p>
       <ul className={indexMainList}>
         {postList.map((node) => (
           <PostListItem

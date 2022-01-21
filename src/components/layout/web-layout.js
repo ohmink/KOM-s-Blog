@@ -5,7 +5,7 @@ import SideBar from "./web-items/sidebar";
 import MarkdownNav from "./web-items/markdown-nav";
 import Search from "./web-items/search-modal";
 
-const WebLayout = ({ children, tags, title, content }) => {
+const WebLayout = ({ children, tags, title, content, selectedTag }) => {
   const searchRef = React.useRef();
   const mainRef = React.useRef();
 
@@ -14,7 +14,7 @@ const WebLayout = ({ children, tags, title, content }) => {
       <Search ref={searchRef} />
       <Header searchRef={searchRef} />
       <div className={style.webLayoutTemplate}>
-        <SideBar tags={tags} />
+        <SideBar tags={tags} selectedTag={selectedTag} />
         <main ref={mainRef} className={style.webLayoutMain}>
           {children}
         </main>

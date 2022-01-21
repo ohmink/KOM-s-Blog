@@ -2,15 +2,13 @@ import * as React from "react";
 import * as Styles from "./mobile-layout.module.css";
 import MobileHeader from "./mobile-items/mobile-header";
 import MobileNav from "./mobile-items/mobile-nav";
-import MobileSearchBar from "./mobile-items/mobile-search-bar";
 
-const MobileLayout = ({ children, tags }) => {
+const MobileLayout = ({ children, tags, selectedTag }) => {
   return (
     <div className={Styles.mobileLayout}>
       <MobileHeader />
-      <MobileNav tags={tags} />
+      <MobileNav tags={tags} selectedTag={selectedTag} />
       <main>{children}</main>
-      <MobileSearchBar className={Styles.mobileSearchBar} />
     </div>
   );
 };
