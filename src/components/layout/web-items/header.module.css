@@ -11,7 +11,6 @@
 }
 
 .header-title {
-  color: black;
   font-size: 1.125rem;
   text-decoration: none;
   margin: auto 4rem;
@@ -28,7 +27,6 @@
 
 .header-contents p,
 .header-contents a {
-  color: black;
   margin: auto 1rem;
   text-decoration: none;
 }

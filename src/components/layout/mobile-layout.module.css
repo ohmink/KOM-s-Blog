@@ -1,6 +1,8 @@
 .mobile-layout {
   margin: 1rem 2rem;
   overflow-x: hidden;
+
+  color: white;
 }
 
 .mobile-search-bar {
