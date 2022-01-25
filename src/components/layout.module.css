@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  font-family: "Merriweather", "Noto Sans Korean";
+}
+
+a {
+  color: black;
+}
+
+button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
+.dark {
+  background-color: #2a2b2d;
+  color: whitesmoke;
+}
+
+.dark a {
+  color: whitesmoke;
+}
