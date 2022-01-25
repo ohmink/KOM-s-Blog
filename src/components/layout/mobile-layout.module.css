@@ -1,3 +1,17 @@
+body {
+  margin: 0;
+  font-family: "Merriweather", "Noto Sans Korean";
+}
+
+a {
+  color: black;
+}
+
+button {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
+
 .mobile-layout {
   margin: 1rem 2rem;
   overflow-x: hidden;
@@ -33,4 +47,13 @@
 
   margin: 0.5rem auto;
   padding: 0.1rem 30px 0.125rem 0.525rem;
+}
+
+.dark {
+  background-color: #2a2b2d;
+  color: whitesmoke;
+}
+
+.dark a {
+  color: whitesmoke;
 }

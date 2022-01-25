@@ -12,11 +12,35 @@ button {
   border: none;
 }
 
+span p {
+  color: #bf9765;
+}
+
 .dark {
   background-color: #2a2b2d;
   color: whitesmoke;
 }
 
-.dark a {
+.dark a,
+.dark li button {
   color: whitesmoke;
+}
+
+.dark h1,
+.dark table {
+  color: #65c4cf;
+}
+
+.dark thead,
+.dark tbody tr {
+  background-color: #2a2b2d;
+}
+
+.dark blockquote {
+  background-color: #313842;
+  color: whitesmoke;
+}
+
+.dark span p {
+  color: #f2bf80;
 }
