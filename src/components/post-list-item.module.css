@@ -9,7 +9,6 @@
 
 .post-list-item-title {
   margin-bottom: 0.5rem;
-  color: #45858c;
 }
 .post-list-item-info {
   display: flex;
@@ -24,11 +23,6 @@
 
 .post-list-item-info span p {
   margin-right: 1rem;
-  color: #bf9765;
-}
-
-.post-list-item-date {
-  color: var(--theme-ui-colors-text-secondary, #80797f);
 }
 
 .post-list-item-summary {

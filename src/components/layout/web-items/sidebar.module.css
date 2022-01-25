@@ -34,7 +34,7 @@
 
 .sidebar-list-item {
   padding: 0.3rem 2rem;
-  border-left: 2px solid var(--theme-ui-colors-grey-30, #d9d7e0);
+  border-left: 2px solid;
   text-decoration: none;
 }
 

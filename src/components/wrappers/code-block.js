@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import oceanicNext from "prism-react-renderer/themes/oceanicNext";
-
-const codeBlockStyle = {
-  margin: "2rem 0",
-  padding: "1.5rem",
-  borderRadius: "10px",
-  fontFamily: "auto",
-  overflowX: "auto",
-};
+import { themeStateContext } from "../themeProvider";
 
 const CodeBlock = (props) => {
+  const theme = useContext(themeStateContext);
+  const codeBlockStyle = {
+    margin: "2rem 0",
+    padding: "1.5rem",
+    borderRadius: "10px",
+    fontFamily: "auto",
+    overflowX: "auto",
+    backgroundColor: theme.mode === "light" ? "#282C34" : "#3F4552",
+  };
+
   return (
     <Highlight
       {...defaultProps}

@@ -29,3 +29,12 @@ button {
   padding-left: 3rem;
   padding-right: 3rem;
 }
+
+.dark {
+  background-color: #2a2b2d;
+  color: whitesmoke;
+}
+
+.dark a {
+  color: whitesmoke;
+}
