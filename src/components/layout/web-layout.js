@@ -4,17 +4,10 @@ import Header from "./web-items/header";
 import SideBar from "./web-items/sidebar";
 import MarkdownNav from "./web-items/markdown-nav";
 import Search from "./web-items/search-modal";
-import { themeStateContext } from "../themeProvider";
 
 const WebLayout = ({ children, tags, title, content, selectedTag }) => {
   const searchRef = React.useRef();
   const mainRef = React.useRef();
-  const theme = React.useContext(themeStateContext);
-
-  React.useEffect(() => {
-    if (theme.mode === "dark") document.body.classList.add(Styles.dark);
-    else document.body.classList.remove(Styles.dark);
-  }, [theme.mode]);
 
   return (
     <div className={Styles.webLayout}>

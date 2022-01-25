@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { isMobile } from "react-device-detect";
 import { indexMainPosition, indexMainList } from "./index.module.css";
+import ThemeProvider from "../components/themeProvider";
 import Seo from "../components/wrappers/seo";
 import Layout from "../components/layout";
 import PostListItem from "../components/post-list-item";
@@ -25,24 +26,26 @@ const BlogPage = ({ location, data }) => {
   }, [location.state, originData]);
 
   return (
-    <Layout isMobile={isMobile} selectedTag={selectedTag}>
-      <Seo />
-      <p className={indexMainPosition}>
-        Documentation {selectedTag === VIEWALL ? "" : `> ${selectedTag}`}
-      </p>
-      <ul className={indexMainList}>
-        {postList.map((node) => (
-          <PostListItem
-            key={node.id}
-            title={node.frontmatter.title}
-            tag={node.frontmatter.tag}
-            date={node.frontmatter.date}
-            summary={node.frontmatter.summary}
-            url={`/post/${node.slug}`}
-          />
-        ))}
-      </ul>
-    </Layout>
+    <ThemeProvider>
+      <Layout isMobile={isMobile} selectedTag={selectedTag}>
+        <Seo />
+        <p className={indexMainPosition}>
+          Documentation {selectedTag === VIEWALL ? "" : `> ${selectedTag}`}
+        </p>
+        <ul className={indexMainList}>
+          {postList.map((node) => (
+            <PostListItem
+              key={node.id}
+              title={node.frontmatter.title}
+              tag={node.frontmatter.tag}
+              date={node.frontmatter.date}
+              summary={node.frontmatter.summary}
+              url={`/post/${node.slug}`}
+            />
+          ))}
+        </ul>
+      </Layout>
+    </ThemeProvider>
   );
 };
 

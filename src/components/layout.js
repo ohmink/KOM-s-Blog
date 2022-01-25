@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import * as Styles from "./layout.module.css";
 import { graphql, useStaticQuery } from "gatsby";
-import ThemeProvider from "./themeProvider";
+import { themeStateContext } from "./themeProvider";
 import WebLayout from "./layout/web-layout";
 import MobileLayout from "./layout/mobile-layout";
 
@@ -18,32 +19,28 @@ const Layout = ({ children, isMobile, title, content, selectedTag }) => {
   `).allMdx;
   const [isLoading, setIsLoading] = useState(true);
   const [deviceState, setDeviceState] = useState(true);
+  const theme = React.useContext(themeStateContext);
 
   useEffect(() => {
     setIsLoading(false);
     setDeviceState(isMobile);
-  }, [isMobile]);
+
+    if (theme.mode === "dark") document.body.classList.add(Styles.dark);
+    else document.body.classList.remove(Styles.dark);
+  }, [isMobile, theme]);
 
   if (isLoading) return <></>;
 
-  return (
-    <ThemeProvider>
-      {deviceState ? (
-        <MobileLayout
-          tags={tags}
-          selectedTag={selectedTag}
-          children={children}
-        />
-      ) : (
-        <WebLayout
-          tags={tags}
-          children={children}
-          title={title}
-          content={content}
-          selectedTag={selectedTag}
-        />
-      )}
-    </ThemeProvider>
+  return deviceState ? (
+    <MobileLayout tags={tags} selectedTag={selectedTag} children={children} />
+  ) : (
+    <WebLayout
+      tags={tags}
+      children={children}
+      title={title}
+      content={content}
+      selectedTag={selectedTag}
+    />
   );
 };
 
