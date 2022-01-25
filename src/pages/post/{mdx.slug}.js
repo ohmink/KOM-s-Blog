@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import { MDXProvider } from "@mdx-js/react";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { isMobile } from "react-device-detect";
-import * as style from "./{mdx.slog}.module.css";
+import * as Styles from "./{mdx.slog}.module.css";
 
 import Layout from "../../components/layout";
 import Seo from "../../components/wrappers/seo";
@@ -24,10 +24,10 @@ const BlogPost = ({ data }) => {
         title={data.mdx.frontmatter.title}
         description={data.mdx.frontmatter.description || "nothin’"}
       />
-      <div className={style.post}>
-        <h1 className={style.postTitle}>{data.mdx.frontmatter.title}</h1>
-        <div className={style.postInfo}>
-          <span className={style.postInfoTags}>
+      <div className={Styles.post}>
+        <h1 className={Styles.postTitle}>{data.mdx.frontmatter.title}</h1>
+        <div className={Styles.postInfo}>
+          <span className={Styles.postInfoTags}>
             {data.mdx.frontmatter.tag.map((name) => (
               <p key={`post-tag-${name}`}>#{name}</p>
             ))}
