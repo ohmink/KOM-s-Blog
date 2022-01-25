@@ -6,12 +6,10 @@ import { themeStateContext } from "./themeProvider";
 const PostListItem = ({ title, tag, date, summary, url }) => {
   const theme = React.useContext(themeStateContext);
   const titleRef = React.useRef();
-  const tagsRef = React.useRef();
   const dateRef = React.useRef();
 
   React.useEffect(() => {
     titleRef.current.style.color = theme.colors.postTitle;
-    tagsRef.current.style.color = theme.colors.postTags;
     dateRef.current.style.color = theme.colors.postDate;
   }, [theme.mode]);
 
@@ -22,7 +20,7 @@ const PostListItem = ({ title, tag, date, summary, url }) => {
           {title}
         </h2>
         <div className={Styles.postListItemInfo}>
-          <span ref={tagsRef}>
+          <span>
             {tag.map((name) => (
               <p key={`${title}-tag:${name}`}>{`#${name}`}</p>
             ))}
