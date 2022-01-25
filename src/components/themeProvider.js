@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useMemo } from "react";
 
 const theme = {
   light: "light",
@@ -7,37 +7,33 @@ const theme = {
 
 const colors = {
   light: {
-    position: "gray",
-    link: "black",
     tagName: "black",
     tagBorder: "#d9d7e0",
     tagSelected: "#45858C",
     postTitle: "#45858c",
-    postTags: "#bf9765",
     postDate: "#80797f",
   },
   dark: {
-    position: "lightgray",
-    link: "whitesmoke",
     tagName: "whitesmoke",
     tagBorder: "#a5a5a5",
     tagSelected: "#65C4CF",
     postTitle: "#65C4CF",
-    postTags: "#F2BF80",
-    postDate: "#ccc",
+    postDate: "#ddd",
   },
 };
 
 const ThemeReducer = (_state, action) => {
   switch (action.type) {
     case theme.light:
-      window.localStorage.setItem("theme", action.type);
+      if (typeof window !== "undefined")
+        window.localStorage.setItem("theme", action.type);
       return {
         mode: theme.light,
         colors: colors.light,
       };
     case theme.dark:
-      window.localStorage.setItem("theme", action.type);
+      if (typeof window !== "undefined")
+        window.localStorage.setItem("theme", action.type);
       return {
         mode: theme.dark,
         colors: colors.dark,
@@ -51,7 +47,13 @@ export const themeStateContext = createContext();
 export const themeDispatchContext = createContext();
 
 const ThemeProvider = ({ children }) => {
-  const mode = window.localStorage.getItem("theme");
+  const mode = useMemo(
+    () =>
+      typeof window !== "undefined"
+        ? window.localStorage.getItem("theme")
+        : null,
+    []
+  );
   const defaultState = {
     mode: mode || theme.light,
     colors: colors[mode] || colors[theme.light],
