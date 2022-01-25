@@ -2,32 +2,34 @@ import * as React from "react";
 import * as Styles from "./sidebar.module.css";
 import { Link } from "gatsby";
 import { StaticImage } from "gatsby-plugin-image";
+import { themeStateContext } from "../../themeProvider";
 
 const SideBar = ({ tags, selectedTag }) => {
   const VIEWALL = "view-all";
   const ulRef = React.useRef();
+  const theme = React.useContext(themeStateContext);
 
   const reset = () => {
     ulRef.current.childNodes.forEach((node) => {
-      node.style.borderLeftColor = "var(--theme-ui-colors-grey-30, #d9d7e0)";
-      node.firstChild.style.color = "black";
+      node.style.borderLeftColor = theme.colors.tagBorder;
+      node.firstChild.style.color = theme.colors.tagName;
     });
   };
 
   React.useEffect(() => {
-    if (selectedTag === VIEWALL) {
-      reset();
-    } else {
+    reset();
+
+    if (selectedTag !== VIEWALL) {
       const currentTag = [...ulRef.current.childNodes].find(
         (node) => node.id === selectedTag
       );
 
       if (currentTag) {
-        currentTag.style.borderLeftColor = "#45858C";
-        currentTag.firstChild.style.color = "#45858C";
+        currentTag.style.borderLeftColor = theme.colors.tagSelected;
+        currentTag.firstChild.style.color = theme.colors.tagSelected;
       }
     }
-  }, [tags, selectedTag]);
+  }, [selectedTag, theme.mode]);
 
   return (
     <nav className={Styles.sidebar}>

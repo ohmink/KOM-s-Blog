@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { graphql, useStaticQuery } from "gatsby";
+import ThemeProvider from "./themeProvider";
 import WebLayout from "./layout/web-layout";
 import MobileLayout from "./layout/mobile-layout";
 
@@ -25,16 +26,24 @@ const Layout = ({ children, isMobile, title, content, selectedTag }) => {
 
   if (isLoading) return <></>;
 
-  return deviceState ? (
-    <MobileLayout tags={tags} selectedTag={selectedTag} children={children} />
-  ) : (
-    <WebLayout
-      tags={tags}
-      children={children}
-      title={title}
-      content={content}
-      selectedTag={selectedTag}
-    />
+  return (
+    <ThemeProvider>
+      {deviceState ? (
+        <MobileLayout
+          tags={tags}
+          selectedTag={selectedTag}
+          children={children}
+        />
+      ) : (
+        <WebLayout
+          tags={tags}
+          children={children}
+          title={title}
+          content={content}
+          selectedTag={selectedTag}
+        />
+      )}
+    </ThemeProvider>
   );
 };
 
