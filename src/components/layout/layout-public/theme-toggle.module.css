@@ -1,0 +1,45 @@
+.toggle-container {
+  display: flex;
+  flex-direction: row;
+
+  width: 50px;
+  height: 25px;
+
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid lightgray;
+  padding: 0 0.325rem;
+
+  position: relative;
+}
+
+.sun,
+.moon {
+  width: fit-content;
+  height: fit-content;
+}
+
+.moon-logo {
+  opacity: 0;
+  transform: translateY(0) translateX(0) rotateZ(50deg);
+  transition: all 1s ease-out;
+}
+.sun-logo {
+  opacity: 1;
+  transform: translateY(0) translateX(-100%) rotateZ(0deg);
+  transition: all 1s ease-out;
+}
+.animate-sun {
+  opacity: 0;
+  transform: translateY(0%) translateX(0) rotateZ(100deg);
+}
+.animate-moon {
+  opacity: 1;
+  transform: translateY(0%) translateX(100%) rotateZ(0deg);
+}
+.animate-moon path {
+  fill: black;
+}
+.animate-sun path {
+  fill: white;
+}
