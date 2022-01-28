@@ -1,6 +1,7 @@
 import * as React from "react";
 import { StaticImage } from "gatsby-plugin-image";
 import { mobileHeader } from "./mobile-header.module.css";
+import ThemeToggle from "../layout-public/theme-toggle";
 
 const MobileHeader = () => {
   const goGithub = () => window.open("https://github.com/ohmink");
@@ -11,7 +12,7 @@ const MobileHeader = () => {
         KOM's Blog
       </a>
       <div>
-        <button type="button">
+        {/* <button type="button">
           <StaticImage
             placeholder="tracedSVG"
             alt="email"
@@ -26,7 +27,8 @@ const MobileHeader = () => {
             src="../../../images/github_icon.png"
             height={20}
           />
-        </button>
+        </button> */}
+        <ThemeToggle />
       </div>
     </header>
   );
