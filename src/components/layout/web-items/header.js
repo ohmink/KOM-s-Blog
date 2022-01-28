@@ -6,20 +6,12 @@ import {
   headerContentsSearch,
 } from "./header.module.css";
 import { StaticImage } from "gatsby-plugin-image";
-import { themeStateContext, themeDispatchContext } from "../../themeProvider";
+import ThemeToggle from "../layout-public/theme-toggle";
 
 const Header = ({ searchRef }) => {
-  const theme = React.useContext(themeStateContext);
-  const themeDispatch = React.useContext(themeDispatchContext);
-
   function openSearch() {
     searchRef.current.display();
     searchRef.current.focus();
-  }
-
-  function changeThmem() {
-    if (theme.mode === "light") themeDispatch({ type: "dark" });
-    else themeDispatch({ type: "light" });
   }
 
   return (
@@ -40,10 +32,11 @@ const Header = ({ searchRef }) => {
             height={20}
           />
         </button>
-        <p onClick={changeThmem}>Theme</p>
+        <p>Contact</p>
         <a href="https://github.com/ohmink" rel="noreferrer" target="_blank">
           Github
         </a>
+        <ThemeToggle />
       </div>
     </header>
   );
