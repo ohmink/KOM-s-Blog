@@ -7,6 +7,8 @@ const theme = {
 
 const colors = {
   light: {
+    backgroundColor: "#2a2b2d",
+    boxShadow: "-1px 1px 0.8em black",
     tagName: "black",
     tagBorder: "#d9d7e0",
     tagSelected: "#45858C",
@@ -14,6 +16,8 @@ const colors = {
     postDate: "#80797f",
   },
   dark: {
+    backgroundColor: "whitesmoke",
+    boxShadow: "-1px 1px 0.8em whitesmoke",
     tagName: "whitesmoke",
     tagBorder: "#a5a5a5",
     tagSelected: "#65C4CF",
