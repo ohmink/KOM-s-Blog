@@ -21,6 +21,10 @@ span p {
   color: whitesmoke;
 }
 
+.dark input {
+  caret-color: whitesmoke;
+}
+
 .dark a,
 .dark li button {
   color: whitesmoke;
