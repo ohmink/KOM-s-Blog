@@ -3,19 +3,9 @@ import { StaticImage } from "gatsby-plugin-image";
 import * as React from "react";
 import * as Styles from "./search-modal.module.css";
 
+import { themeStateContext } from "../../themeProvider";
+
 const Search = (_props, ref) => {
-  const searchRef = React.useRef();
-  const inputRef = React.useRef();
-
-  React.useImperativeHandle(ref, () => ({
-    display: () => {
-      searchRef.current.style.display = "flex";
-    },
-    focus: () => {
-      inputRef.current.focus();
-    },
-  }));
-
   const nodes = useStaticQuery(graphql`
     query {
       allMdx {
@@ -35,7 +25,30 @@ const Search = (_props, ref) => {
     return node;
   });
 
+  const theme = React.useContext(themeStateContext);
   const [result, setResult] = React.useState(nodes);
+  const searchRef = React.useRef();
+  const inputRef = React.useRef();
+
+  React.useImperativeHandle(ref, () => ({
+    display: () => {
+      searchRef.current.style.display = "flex";
+    },
+    focus: () => {
+      inputRef.current.focus();
+    },
+  }));
+
+  React.useEffect(() => {
+    searchRef.current.style.backgroundColor =
+      theme.colors.searchModalOutlyingArea;
+    searchRef.current.firstChild.style.backgroundColor =
+      theme.colors.searchModalBackgroundColor;
+    searchRef.current.firstChild.lastChild.childNodes.forEach(
+      (node) =>
+        (node.style.backgroundColor = theme.colors.searchItemBackgroundColor)
+    );
+  }, [theme.mode]);
 
   function closeModal(e) {
     const $target = e.target;
@@ -54,7 +67,8 @@ const Search = (_props, ref) => {
 
   function mouseOut(e) {
     const $target = e.target.closest(`.${Styles.searchResultItem}`);
-    if ($target) $target.style.backgroundColor = "#eee";
+    if ($target)
+      $target.style.backgroundColor = theme.colors.searchItemBackgroundColor;
   }
 
   return (
