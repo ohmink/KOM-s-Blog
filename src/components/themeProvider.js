@@ -7,6 +7,9 @@ const theme = {
 
 const colors = {
   light: {
+    searchModalOutlyingArea: "rgba(0,0,0,0.3)",
+    searchModalBackgroundColor: "white",
+    searchItemBackgroundColor: "#eee",
     backgroundColor: "#2a2b2d",
     boxShadow: "-1px 1px 0.8em black",
     tagName: "black",
@@ -16,6 +19,9 @@ const colors = {
     postDate: "#80797f",
   },
   dark: {
+    searchModalOutlyingArea: "rgba(150,150,150,0.3)",
+    searchModalBackgroundColor: "#2a2b2d",
+    searchItemBackgroundColor: "#313842",
     backgroundColor: "whitesmoke",
     boxShadow: "-1px 1px 0.8em whitesmoke",
     tagName: "whitesmoke",
